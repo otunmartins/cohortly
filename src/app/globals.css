@@ -1,1 +1,48 @@
 @import "tailwindcss";
+
+@theme {
+  /* Brand · clinical teal */
+  --color-brand-50:  oklch(97% 0.02 180);
+  --color-brand-100: oklch(93% 0.04 180);
+  --color-brand-500: oklch(58% 0.10 185);
+  --color-brand-700: oklch(45% 0.09 185);
+  --color-brand-900: oklch(30% 0.06 185);
+
+  /* Accent · warm amber — AI/generation, sparingly */
+  --color-accent-50:  oklch(97% 0.03 85);
+  --color-accent-100: oklch(94% 0.05 80);
+  --color-accent-500: oklch(80% 0.13 75);
+  --color-accent-700: oklch(62% 0.11 70);
+
+  /* Paper · warm neutral surfaces */
+  --color-paper-50:  oklch(99% 0.004 90);
+  --color-paper-100: oklch(97% 0.006 90);
+  --color-paper-200: oklch(93% 0.008 90);
+  --color-paper-300: oklch(88% 0.010 90);
+
+  /* Status */
+  --color-success: oklch(65% 0.15 145);
+  --color-warn:    oklch(75% 0.15 80);
+  --color-danger:  oklch(60% 0.20 25);
+
+  /* Typography */
+  --font-display: var(--font-instrument-serif), serif;
+  --font-sans:    var(--font-inter-tight), sans-serif;
+  --font-mono:    var(--font-jetbrains-mono), monospace;
+
+  /* Default body font */
+  --default-font-family: var(--font-sans);
+}
+
+/* Tight density: 12–13px base, tabular-nums for figures */
+html {
+  font-size: 13px;
+  font-feature-settings: "tnum";
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-paper-100);
+  color: oklch(20% 0.01 240);
+  -webkit-font-smoothing: antialiased;
+}
