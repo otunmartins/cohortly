@@ -1,4 +1,4 @@
-import type { MockProject } from "@/lib/mock-data";
+import type { Project as MockProject } from "@/types/project";
 import { ProjectCard } from "./ProjectCard";
 
 interface Props {

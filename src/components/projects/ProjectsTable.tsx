@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronUp, ChevronDown, ChevronsUpDown, MapPin, AlertCircle } from "lucide-react";
-import type { MockProject } from "@/lib/mock-data";
+import type { Project as MockProject } from "@/types/project";
 import { StatusBadge } from "./StatusBadge";
 
 type SortKey = keyof Pick<

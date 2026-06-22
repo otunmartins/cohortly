@@ -1,6 +1,8 @@
 import { Suspense } from "react";
-import { MOCK_PROJECTS, MOCK_ORG } from "@/lib/mock-data";
+import { getProjects, getOrganization } from "@/lib/data/projects";
 import { ProjectsClient } from "@/components/projects/ProjectsClient";
+
+const ORG_ID = "org_maple_001";
 
 function ProjectsSkeleton() {
   return (
@@ -17,10 +19,18 @@ function ProjectsSkeleton() {
   );
 }
 
+async function ProjectsContent() {
+  const [projects, org] = await Promise.all([
+    getProjects(ORG_ID),
+    getOrganization(ORG_ID),
+  ]);
+  return <ProjectsClient projects={projects} org={org} />;
+}
+
 export default function ProjectsPage() {
   return (
     <Suspense fallback={<ProjectsSkeleton />}>
-      <ProjectsClient projects={MOCK_PROJECTS} org={MOCK_ORG} />
+      <ProjectsContent />
     </Suspense>
   );
 }
