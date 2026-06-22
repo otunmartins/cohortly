@@ -1,42 +1,43 @@
-# Current Feature
-
-Projects (S04)
+# Current Feature: Dashboard (S03)
 
 ## Status
 
-Completed
+In Progress
 
 ## Goals
 
-Build the Projects screen — all studies in the tenant, browsable three ways, filterable, and searchable.
+Build the Dashboard screen — personalised home base showing review queue, study health, regulatory pulse, and audit trail.
 
-Route: `app/(app)/projects/page.tsx` (+ `[projectId]/page.tsx`) · Nav: Workspace · Screen: S04
+Route: `app/(app)/dashboard/page.tsx` · Nav: Workspace · Screen: S03
 
-- **Top bar:** breadcrumb "Projects", ⌘K, Import, **+ New project**
-- **Header:** "All studies · {Org} · {N} projects · {M} active"; Grid / Table / Timeline view switch; search input; "Showing X of Y"
-- **Filter chips:** Phase · Indication · Status (removable)
-- **Grid cards:** study code (`MAP-204`), status badge, title, `Phase · indication · regions`, enrolment progress bar (e.g. 198/320), owner avatar, site count, open-items badge
-- **Three views:** Grid, Table (TanStack Table, sortable/virtualized), Timeline (Gantt)
-- **RSC + server fetch**; view switch + filters as client islands that update search params
-- `createProject(input)` Server Action behind **+ New project**
+- **Top bar:** breadcrumb "Dashboard", ⌘K, Import, + New project, notifications
+- **Header:** greeting + date ("Good morning, Priya · Monday 11 May 2026"); subline "N documents awaiting review · M submissions due this week"; Today / Week / Quarter toggle
+- **KPI strip (4 cards):** Active studies (count + Δ + "across N indications") · Documents in review (count + Δ + "M below SLA") · Open regulatory queries (count + Δ + "K escalated to MHRA") · AI evidence coverage % ("of generated statements")
+- **My queue / Awaiting your review:** tabs All / Protocols / Reg writing / Safety; rows show type icon, study/doc id, title, tags, confidence %, age, Open button
+- **Right rail:** Regulatory Pulse (Live badge; MHRA/FDA/EMA/ICH updates) · Provenance — Audit trail today (21 CFR 11 badge; timestamped actor → action rows)
+- **Below:** Active studies grid (cards link to project)
+- RSC + Suspense streaming; period toggle as client island
 
 ## Components
 
-- shadcn: `Card`, `Table`, `Tabs`, `Badge`, `Input`, `DropdownMenu`, `Progress`, `Avatar`
-- New: `ProjectCard`, `ProjectsTable`, `ProjectsTimeline`, `FilterChips`
+- shadcn: `Card`, `Badge`, `Progress`, `Tabs`, `Avatar`, `Separator`
+- Bespoke: `<Confidence/>` (queue rows)
+- New: `KpiCard`, `ReviewQueueRow`, `RegPulseItem`, `AuditTrailRow`
 
 ## Data
 
-- `Project[]` tenant-scoped with enrolment rollups, `Site` count, open `ReviewTask`/`Document` count, owner `User`
-- Mock data from `src/lib/mock-data.ts` for now
+- `Project[]` active counts by indication, `ReviewTask[]` assigned to user with confidence/SLA, `Document[]` in-review counts, `RegUpdate[]` pulse feed, `AuditEvent[]` today — all tenant-scoped
+- KPIs are aggregates with period deltas (Today / Week / Quarter)
+- Mock data from `src/lib/data/dashboard.ts` (following seed-spec data-access pattern)
 
 ## Notes
 
-- View switch, filters, and search compose via search params (AND logic)
-- Card/row click → `[projectId]`
-- Loading skeleton, empty ("No studies match these filters"), and error states required
-- `createProject` must validate + RBAC + emit `AuditEvent` in-transaction
-- Table virtualises for large lists; responsive; a11y (WCAG 2.1 AA)
+- All reads tenant-scoped by `organizationId` — no mutations on this screen
+- Audit-trail panel is a read of the append-only `AuditEvent` log — render only, never mutate
+- Period toggle refetches KPIs + queue; queue tabs filter by domain
+- Loading skeletons per card/section; empty state ("Your queue is clear"); error per region (don't fail whole page)
+- "Open" in queue rows routes to the item's editor
+- WCAG 2.1 AA; responsive mobile → desktop
 
 ## History
 

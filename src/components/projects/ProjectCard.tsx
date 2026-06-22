@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { MapPin, AlertCircle } from "lucide-react";
-import type { MockProject } from "@/lib/mock-data";
+import type { Project as MockProject } from "@/types/project";
 import { StatusBadge } from "./StatusBadge";
 
 function EnrolmentBar({

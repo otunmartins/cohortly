@@ -1,4 +1,4 @@
-import type { ProjectStatus } from "@/lib/mock-data";
+import type { ProjectStatus } from "@/types/project";
 
 const CONFIG: Record<
   ProjectStatus,

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { MockProject } from "@/lib/mock-data";
+import type { Project as MockProject } from "@/types/project";
 import { StatusBadge } from "./StatusBadge";
 
 const STATUS_BAR_COLOR: Record<MockProject["status"], string> = {

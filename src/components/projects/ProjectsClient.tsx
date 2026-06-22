@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import { LayoutGrid, Table2, GanttChartSquare, Search, X, SlidersHorizontal } from "lucide-react";
-import type { MockProject, MockOrganization } from "@/lib/mock-data";
+import type { Project as MockProject, Organization as MockOrganization } from "@/types/project";
 import { ProjectsGrid } from "./ProjectsGrid";
 import { ProjectsTable } from "./ProjectsTable";
 import { ProjectsTimeline } from "./ProjectsTimeline";
