@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Bell, Search, Menu } from "lucide-react";
+import { Bell, Search, Menu, Upload, Plus } from "lucide-react";
 
 const ROUTE_TITLES: Record<string, string> = {
   "/dashboard": "Dashboard",
@@ -75,6 +75,25 @@ export function TopBar({ onMenuOpen }: TopBarProps) {
           </span>
         </div>
       </div>
+
+      {/* Page-specific actions */}
+      {pathname === "/projects" && (
+        <div className="flex items-center gap-1.5">
+          <button className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium text-[oklch(30%_0.01_240)] border border-paper-200 rounded-md hover:bg-paper-200 transition-colors">
+            <Upload size={11} aria-hidden="true" />
+            Import
+          </button>
+          <button
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-semibold text-white rounded-md transition-colors"
+            style={{ backgroundColor: "oklch(58% 0.10 185)" }}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "oklch(45% 0.09 185)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "oklch(58% 0.10 185)"; }}
+          >
+            <Plus size={11} aria-hidden="true" />
+            New project
+          </button>
+        </div>
+      )}
 
       {/* Notifications */}
       <div className="ml-auto flex items-center">
