@@ -4,6 +4,8 @@
 > Screenshot: `@context/screenshots/inbox-ui.png`
 > References: `@project-overview.md` (§5 S05, §7 `Notification`/`Comment`/`ReviewTask`), `@coding-standards.md`, `@ai-interaction.md`
 
+> 🧱 **Mock phase (now):** Inbox is **mostly presentational** — a notifications/messaging surface (two-pane list + detail + reply box), not an AI feature. Build it all from `inboxThreads` in `@/src/lib/mock-data.ts` via a thin `src/lib/data/inbox.ts` function. The **only** AI action on the page is the optional **"Draft with Cohortly"** reply assist (+ "Cite source") — **stub those** (no generation, no `/api/generate`); their RAG + provenance wiring lands in the AI phase. Note: "AI safety flag" threads are just `Notification` rows *surfaced* here — the AI ran on the Safety screen, not here.
+
 ## Purpose
 Unified work inbox across all lanes: review requests, @mentions, regulator updates, AI safety flags, system notices.
 
