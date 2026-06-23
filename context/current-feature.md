@@ -1,16 +1,31 @@
-# Current Feature
+# Current Feature: Eligibility Engine (S08)
 
 ## Status
 
-Not Started
+In Progress
 
 ## Goals
 
-<!-- Add goals here -->
+- Criteria table with All / Inclusion / Exclusion / Flagged tabs, feasibility bars (0–100), source badges, Reg-mandated badges, and inline warnings
+- Scenario modelling rail with toggle levers (Switch/Slider) showing live ±pp deltas on the modelled eligible pool
+- Demographic representation bars vs FDA Diversity Plan thresholds with unmet-threshold warning banner
+- Site readiness list (top N sites with readiness scores)
+- KPI header: combined feasibility %, projected screen failure %, time to enrol, comparator trial %
+- TopBar: breadcrumb "Eligibility · MAP-204 · Criteria builder", Regenerate (stubbed), Save to protocol
+- Add-criterion row with MedDRA/ICD-10 validation stub
+- Client island for live what-if recompute; server data via `src/lib/data/eligibility.ts` + mock data
+- Criterion edits audited (`AuditEvent` in same transaction, tenant-scoped)
+- Loading, empty, recomputing, and error states
 
 ## Notes
 
-<!-- Add notes here -->
+- Route: `app/(app)/eligibility/[id]/page.tsx` · Screen S08
+- Mock phase: all data from `src/lib/mock-data.ts` via `src/lib/data/eligibility.ts`; stub Regenerate, scenario recompute (return mock deltas), MedDRA/ICD-10 validation; AACT precedent figures are mocked
+- Components: `CriteriaTable`, `CriterionRow`, `ScenarioLevers`, `DemographicBars`, `SiteReadinessList`; shadcn Table (+ TanStack), Switch/Slider, Progress, Badge
+- Server actions: `updateCriterion`, add/remove criterion (audited); scenario toggle → lightweight recompute; Regenerate → POST /api/generate (stub)
+- Rendering: Server Components for initial data; client islands for table edits and scenario levers
+- `regMandated` criteria flagged; criterion edits must emit AuditEvent; AACT figures carry data-as-of provenance (read-only SQL — mocked for now)
+- Out of scope: multi-arm criteria, criterion-level version history
 
 ## History
 
