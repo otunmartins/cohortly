@@ -4,6 +4,8 @@
 > Screenshot: `@context/screenshots/protocol-copilot.png`
 > References: `@project-overview.md` (§5 S07, §7 `Document`/`Section`/`Citation`/`Source`), `@coding-standards.md` (§A8, §A10), `@ai-interaction.md`
 
+> 🧱 **Mock phase (now):** Build the three-pane editor (TipTap), section nav, compliance meters, retrieved-sources rail, and recommendation cards against `protocolSections`, `protocolComplianceMeters`, `protocolRetrievedSources`, and `protocolRecommendation` from `@/src/lib/mock-data.ts` via a thin `src/lib/data/protocol.ts` function. **Stub** Generate, autosave, and accept/reject suggestion (UI state only — no `/api/generate`). The RAG + text-to-SQL precedent generation lands in the **AI/AACT phase**. The sections below describe the target state.
+
 ## Purpose
 Three-pane protocol editor: author SPIRIT-compliant sections with grounded generation, inline citations, live compliance, and retrieved-source transparency.
 

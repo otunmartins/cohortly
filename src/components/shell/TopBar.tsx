@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Bell, Search, Menu, Upload, Plus } from "lucide-react";
+import { Bell, Search, Menu, Upload, Plus, Save, LayoutTemplate } from "lucide-react";
 
 const ROUTE_TITLES: Record<string, string> = {
   "/dashboard": "Dashboard",
@@ -47,11 +47,23 @@ export function TopBar({ onMenuOpen }: TopBarProps) {
 
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 min-w-0">
-        <span className="text-[11px] text-[oklch(55%_0.01_240)]">Cohortly</span>
-        <span className="text-[11px] text-[oklch(70%_0.01_240)]">/</span>
-        <span className="text-[11px] font-semibold text-[oklch(20%_0.01_240)] truncate">
-          {title}
-        </span>
+        {pathname === "/protocols/new" ? (
+          <>
+            <span className="text-[11px] text-[oklch(55%_0.01_240)]">Protocol</span>
+            <span className="text-[11px] text-[oklch(70%_0.01_240)]">·</span>
+            <span className="text-[11px] font-semibold text-[oklch(20%_0.01_240)] truncate">
+              New protocol
+            </span>
+          </>
+        ) : (
+          <>
+            <span className="text-[11px] text-[oklch(55%_0.01_240)]">Cohortly</span>
+            <span className="text-[11px] text-[oklch(70%_0.01_240)]">/</span>
+            <span className="text-[11px] font-semibold text-[oklch(20%_0.01_240)] truncate">
+              {title}
+            </span>
+          </>
+        )}
       </nav>
 
       {/* Search — grows to fill remaining space */}
@@ -77,6 +89,18 @@ export function TopBar({ onMenuOpen }: TopBarProps) {
       </div>
 
       {/* Page-specific actions */}
+      {pathname === "/protocols/new" && (
+        <div className="flex items-center gap-1.5">
+          <button className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium text-[oklch(30%_0.01_240)] border border-paper-200 rounded-md hover:bg-paper-200 transition-colors">
+            <Save size={11} aria-hidden="true" />
+            Save draft
+          </button>
+          <button className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium text-[oklch(30%_0.01_240)] border border-paper-200 rounded-md hover:bg-paper-200 transition-colors">
+            <LayoutTemplate size={11} aria-hidden="true" />
+            Templates
+          </button>
+        </div>
+      )}
       {pathname === "/projects" && (
         <div className="flex items-center gap-1.5">
           <button className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium text-[oklch(30%_0.01_240)] border border-paper-200 rounded-md hover:bg-paper-200 transition-colors">

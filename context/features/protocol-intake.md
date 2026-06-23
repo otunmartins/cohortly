@@ -4,6 +4,8 @@
 > Screenshot: `@context/screenshots/protocol-intake.png`
 > References: `@project-overview.md` (§5 S06, §6 generation-as-job), `@coding-standards.md`, `@ai-interaction.md`
 
+> 🧱 **Mock phase (now):** Build the three input modes (Guided / Freeform / Import) and the "What you'll get" rail as UI only, with form state (react-hook-form + zod) validated locally. **Stub** "Generate draft protocol" — instead of `POST /api/generate` + an async job, route to a placeholder `protocols/[id]` (or show a stubbed success). MeSH autocomplete and endpoint suggestions can be static mock lists. The real generation job lands in the **AI phase**. The sections below describe the target state.
+
 ## Purpose
 The prompt screen that precedes protocol generation. Captures structured trial intent, then kicks off an async draft job → routes to Protocol Copilot.
 
