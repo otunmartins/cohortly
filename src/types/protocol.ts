@@ -28,6 +28,77 @@ export type Jurisdiction = (typeof JURISDICTIONS)[number];
 
 export type IntakeMode = "guided" | "freeform" | "import";
 
+// ── Protocol Copilot (S07) ─────────────────────────────────────────────────
+
+export type SectionStatus = "empty" | "draft" | "flagged" | "complete";
+export type DocStatus = "DRAFT" | "IN_REVIEW" | "APPROVED" | "LOCKED";
+export type EditorTab = "edit" | "review" | "compare";
+export type RecommendationStatus = "pending" | "confirmed" | "dismissed";
+
+export interface ProtocolSection {
+  id: string;
+  number: string;
+  heading: string;
+  sourceCount: number;
+  flaggedCount: number;
+  gapCount: number;
+  status: SectionStatus;
+  /** TipTap ProseMirror JSON document */
+  contentJson: Record<string, unknown>;
+  complianceScore: number;
+}
+
+export interface ComplianceMeter {
+  framework: string;
+  completed: number;
+  total: number;
+}
+
+export interface RetrievedSource {
+  id: string;
+  n: number;
+  authority: string;
+  title: string;
+  relevanceScore: number;
+  kind: string;
+  snippet: string;
+}
+
+export interface ProtocolRecommendation {
+  id: string;
+  tag: string;
+  status: RecommendationStatus;
+  text: string;
+  confidence: number;
+  precedentCount: number;
+  sectionId: string;
+}
+
+export interface TaEvidence {
+  precedentProtocols: number;
+  similarTrials: number;
+  sponsors: string[];
+  confidence: number;
+  recruitment: number;
+}
+
+export interface ProtocolDocument {
+  id: string;
+  projectId: string;
+  projectCode: string;
+  projectTitle: string;
+  status: DocStatus;
+  lastEditedBy: string;
+  lastEditedAgo: string;
+  therapeuticArea: string;
+  phase: string;
+  sections: ProtocolSection[];
+  complianceMeters: ComplianceMeter[];
+  retrievedSources: RetrievedSource[];
+  recommendation: ProtocolRecommendation;
+  taEvidence: TaEvidence;
+}
+
 export const ProtocolIntakeSchema = z.object({
   therapeuticArea: z.string().min(1, "Required"),
   meshCode: z.string().optional(),
