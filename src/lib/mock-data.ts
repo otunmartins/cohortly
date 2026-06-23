@@ -1,5 +1,6 @@
 export type { Role, OrgType, ProjectStatus, Organization, User, Project } from "@/types/project";
 import type { InboxThread } from "@/types/inbox";
+import type { KbAnswer, KbIndexHealth } from "@/types/knowledge";
 import type { Organization, User, Project } from "@/types/project";
 
 // Legacy aliases — kept while other pages migrate to @/types/*
@@ -505,4 +506,148 @@ export const MOCK_INBOX_THREADS: InboxThread[] = [
     ],
   },
 ];
+
+// ── Knowledge Base ─────────────────────────────────────────────────────────────
+
+export const SAMPLE_KB_ANSWER: KbAnswer = {
+  query: "When is a DSMB required for a Phase II NASH trial in the UK?",
+  confidence: 92,
+  sourceCount: 4,
+  latencyMs: 730,
+  modelVersion: "cohort-v3",
+  segments: [
+    { type: "text", value: "A DSMB is " },
+    { type: "text", value: "required" },
+    { type: "text", value: " for Phase II NASH trials in the UK when the trial enrolls vulnerable populations or where the intervention carries non-negligible safety risk " },
+    {
+      type: "citation",
+      value: "[1]",
+      citationRef: { n: 1, sourceId: "src_fda_dsmb_2024", label: "FDA DSMB Guidance" },
+    },
+    { type: "text", value: ". For NASH specifically, the FDA's 2023 guidance and EMA's SAWP minutes recommend independent safety oversight given the hepatic toxicity considerations " },
+    {
+      type: "citation",
+      value: "[2]",
+      citationRef: { n: 2, sourceId: "src_ema_sawp_2023", label: "EMA SAWP Minutes" },
+    },
+    { type: "text", value: " " },
+    {
+      type: "citation",
+      value: "[3]",
+      citationRef: { n: 3, sourceId: "src_ich_e6r3", label: "ICH E6(R3)" },
+    },
+    { type: "text", value: ". The DSMB charter must specify stopping rules, interim analysis triggers, and unblinding procedures " },
+    {
+      type: "citation",
+      value: "[4]",
+      citationRef: { n: 4, sourceId: "src_maple_sop_cl014", label: "MAP SOP-CL-014" },
+    },
+    { type: "text", value: ". Maple's internal SOP CL-014 requires stratification by baseline fibrosis stage and T2DM status, both of which the DSMB should review at interim analysis " },
+    {
+      type: "citation",
+      value: "[4]",
+      citationRef: { n: 4, sourceId: "src_maple_sop_cl014", label: "MAP SOP-CL-014" },
+    },
+    { type: "text", value: "." },
+  ],
+  passages: [
+    {
+      id: "pass_001",
+      n: 1,
+      authority: "FDA",
+      kind: "Guidance",
+      date: "Jul '24",
+      score: 0.93,
+      citedCount: 41,
+      snippet:
+        "The DSMB charter must specify stopping rules, interim analysis triggers, and unblinding procedures. For trials in populations with pre-existing hepatic conditions, DSMB oversight is strongly recommended regardless of phase.",
+      sourceId: "src_fda_dsmb_2024",
+      sourceTitle: "ICH E6(R3) — 15.18 Data Safety Monitoring Boards",
+    },
+    {
+      id: "pass_002",
+      n: 2,
+      authority: "FDA",
+      kind: "Guidance",
+      date: "Nov '23",
+      score: 0.71,
+      citedCount: 13,
+      snippet:
+        "A DSMB should be established for trials enrolling vulnerable populations or where the intervention carries non-negligible safety risk. The charter must specify stopping rules, interim analysis triggers, and unblinding procedures.",
+      sourceId: "src_fda_nash_2023",
+      sourceTitle: "FDA – NASH Guidance — Endpoints for clinical trials in NASH",
+    },
+    {
+      id: "pass_003",
+      n: 3,
+      authority: "EMA",
+      kind: "Guidance",
+      date: "Mar '23",
+      score: 0.68,
+      citedCount: 8,
+      snippet:
+        "Independent oversight via a DSMB or equivalent committee is expected for Phase II studies involving novel mechanisms with potential hepatic signals. Charter review by the SAWP is recommended prior to first enrolment.",
+      sourceId: "src_ema_sawp_2023",
+      sourceTitle: "EMA SAWP Scientific Advice — NASH Phase II Design Considerations",
+    },
+    {
+      id: "pass_004",
+      n: 4,
+      authority: "Internal",
+      kind: "SOP",
+      date: "Jan '25",
+      score: 0.61,
+      citedCount: 3,
+      snippet:
+        "SOP CL-014: All Phase II oncology and metabolic trials must establish a DSMB with a charter approved by the Medical Director. Stratification factors (fibrosis stage, T2DM status) must be pre-specified and reviewed at each interim.",
+      sourceId: "src_maple_sop_cl014",
+      sourceTitle: "MAP SOP-CL-014 — DSMB Charter Requirements",
+    },
+  ],
+};
+
+export const SAMPLE_KB_INDEX_HEALTH: KbIndexHealth = {
+  status: "synced",
+  lastSyncedAgo: "14m ago",
+  totalChunks: 482419,
+  categories: [
+    { label: "Regulators · FDA · EMA · MHRA", chunkCount: 142891 },
+    { label: "ICH guidelines", chunkCount: 28485 },
+    { label: "ClinicalTrials.gov + EU CTR", chunkCount: 158359 },
+    { label: "PubMed (indexed abstracts)", chunkCount: 44128 },
+    { label: "Internal · Maple SOPs", chunkCount: 7482 },
+    { label: "Internal · Prior CSRs · CSP", chunkCount: 21195 },
+  ],
+  recentIngests: [
+    {
+      id: "ing_001",
+      title: "ICH E6(R3) Step 4 adopted",
+      authority: "ICH",
+      chunksAdded: 312,
+      age: "2d",
+    },
+    {
+      id: "ing_002",
+      title: "FDA draft guidance – DCT",
+      authority: "FDA",
+      chunksAdded: 98,
+      age: "4d",
+    },
+    {
+      id: "ing_003",
+      title: "MAP-CRF-v2.1",
+      authority: "Internal",
+      chunksAdded: 44,
+      age: "5d",
+    },
+    {
+      id: "ing_004",
+      title: "Pre-IND meeting minutes",
+      authority: "Internal",
+      chunksAdded: 27,
+      age: "6d",
+    },
+  ],
+  pinnedStudyCode: "MAP-204",
+};
 

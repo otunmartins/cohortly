@@ -1,16 +1,26 @@
-# Current Feature
+# Current Feature: Knowledge Base (S14)
 
 ## Status
 
-Not Started
+Complete
 
 ## Goals
 
-<!-- bullet points of what success looks like -->
+- Hero search bar with query input + Ask button; source filters (FDA / EMA / MHRA·ILAP / ICH / Internal SOPs / CT.gov / PubMed) and date range.
+- Synthesised answer card: confidence %, source count, latency, plain-English answer with inline `<Citation/>` chips; Copy with citations, Insert into Module 2.7, Share actions.
+- Source passages list (ranked): Relevance / Recency / Authority sort tabs; per-passage authority badge, kind, date, score, cited-count, snippet; Open source / Copy citation / Pin to project actions.
+- Right rail: Index health (Synced, chunk count), Sources breakdown by category, Recent ingests, Pinned to project.
+- Loading/streaming skeleton, empty-per-filter state, error state.
+- Tenant-scoped; WCAG 2.1 AA; responsive.
 
 ## Notes
 
-<!-- additional context, constraints, or details from spec -->
+- **Mock phase only:** all data comes from `sampleKbAnswer` + `knowledgeSources` in `src/lib/mock-data.ts` via a thin `src/lib/data/knowledge.ts` function. Render the streamed-answer UI as a **static mock** — no pgvector, no AI service, no `/api/kb/search` call.
+- Bespoke components: `KbAnswer`, `SourcePassageCard`, `SourceFilters`, `IndexHealthRail`.
+- Reuse existing shared components: `<Citation/>`, `<Confidence/>`.
+- shadcn: `Command`, `Card`, `Badge`, `Tabs`, `Input`.
+- Route: `app/(app)/knowledge/page.tsx`.
+- This is the cheapest end-to-end exercise of the retrieval spine — lay the UI scaffolding so the AI phase can wire in the real streaming search with minimal friction.
 
 ## History
 
