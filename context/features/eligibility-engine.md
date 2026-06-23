@@ -4,6 +4,8 @@
 > Screenshot: `@context/screenshots/eligibility-engine.png`
 > References: `@project-overview.md` (§5 S08, §7 `Criterion`/`FeasibilityRun`), `@coding-standards.md` (Part B text-to-SQL), `@ai-interaction.md`
 
+> 🧱 **Mock phase (now):** Build the criteria table, scenario levers, demographics, and site-readiness UI against `eligibilityCriteria`, `feasibilitySummary`, `demographics`, `diversityWarning`, `scenarioLevers`, `modelledEligiblePoolPct`, and `sites` from `@/src/lib/mock-data.ts` via a thin `src/lib/data/eligibility.ts` function. **Stub** Regenerate (generation), scenario recompute (return the mock deltas), and MedDRA/ICD-10 validation. Precedent/feasibility figures come from **text-to-SQL over AACT in the AACT phase** — mock them now. The sections below describe the target state.
+
 ## Purpose
 Criteria builder with live feasibility modelling: see how each inclusion/exclusion criterion narrows the pool, scenario-model relaxations, and check demographic + site readiness.
 
