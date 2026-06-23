@@ -4,6 +4,8 @@
 > Screenshot: `@context/screenshots/knowledge-base.png`
 > References: `@project-overview.md` (§2 retrieval, §5 S14, §7 `Source`/`Chunk`/`Citation`), `@coding-standards.md` (§A8, Part B), `@ai-interaction.md`
 
+> 🧱 **Mock phase (now):** Build the answer card, ranked source passages, filters, and citations against `sampleKbAnswer` + `knowledgeSources` from `@/src/lib/mock-data.ts` via a thin `src/lib/data/knowledge.ts` function. Render the streamed-answer UI as a **static mock** for now. **Do not** stand up pgvector, the AI service, or `/api/kb/search` here — the hybrid dense+BM25 retrieval is the **first job of the AI phase**. The sections below describe that target state.
+
 ## Purpose
 Ask-anything semantic search across global regulations + institutional memory, with citation-grade answers. **This is the cheapest end-to-end exercise of the retrieval spine — build it first** (`@project-overview.md` §11/§13).
 
