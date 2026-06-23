@@ -2,6 +2,7 @@ export type { Role, OrgType, ProjectStatus, Organization, User, Project } from "
 import type { InboxThread } from "@/types/inbox";
 import type { KbAnswer, KbIndexHealth } from "@/types/knowledge";
 import type { Organization, User, Project } from "@/types/project";
+import type { ProtocolDocument } from "@/types/protocol";
 
 // Legacy aliases — kept while other pages migrate to @/types/*
 export type MockOrganization = Organization;
@@ -604,6 +605,136 @@ export const SAMPLE_KB_ANSWER: KbAnswer = {
       sourceTitle: "MAP SOP-CL-014 — DSMB Charter Requirements",
     },
   ],
+};
+
+// ── Protocol Copilot (S07) ───────────────────────────────────────────────────
+
+const STUDY_DESIGN_CONTENT = {
+  type: "doc",
+  content: [
+    {
+      type: "paragraph",
+      content: [
+        {
+          type: "text",
+          text: "Multicenter, randomised, double-blind, placebo-controlled adaptive Phase II study evaluating onaplazib 30 mg and 60 mg QD in adults with biopsy-confirmed NASH (F2-F3). ",
+        },
+        { type: "citation", attrs: { n: 14, label: "FDA·Adaptive Designs", sourceId: "src_fda_adaptive" } },
+        { type: "text", text: " " },
+        { type: "citation", attrs: { n: 3, label: "MAP-204 IB", sourceId: "src_map204_ib" } },
+        { type: "text", text: " " },
+        { type: "citation", attrs: { n: 1, label: "ICH E6(R3) §5.18", sourceId: "src_ich_e6" } },
+      ],
+    },
+    {
+      type: "paragraph",
+      content: [
+        { type: "text", text: "The study employs " },
+        { type: "text", marks: [{ type: "bold" }], text: "a two-stage adaptive design" },
+        {
+          type: "text",
+          text: " with a pre-specified interim analysis at 50% of target enrolment to support a futility stop at the interim. Subjects will be randomised 1:1:1 to receive onaplazib 30 mg, onaplazib 60 mg or matched placebo administered orally once daily for 52 weeks.",
+        },
+      ],
+    },
+    {
+      type: "paragraph",
+      content: [
+        {
+          type: "text",
+          text: "Stratification factors include baseline NAS score (≥2 vs ≥5), presence of type 2 diabetes mellitus, and recruiting region (UK · EU · US). ",
+        },
+        { type: "citation", attrs: { n: 43, label: "NASH CRN strat.", sourceId: "src_nash_crn" } },
+      ],
+    },
+    {
+      type: "paragraph",
+      content: [
+        { type: "text", text: "The primary endpoint is the proportion of subjects achieving a " },
+        {
+          type: "text",
+          marks: [{ type: "bold" }],
+          text: "≥2-point reduction in NAS score without worsening of fibrosis at Week 52",
+        },
+        { type: "text", text: ", assessed by central blinded histopathology review. " },
+        { type: "citation", attrs: { n: 7, label: "FDA NASH Guidance", sourceId: "src_fda_nash" } },
+        {
+          type: "text",
+          text: " Secondary endpoints include change in liver stiffness (MRE), MRI-PDFF, ALT/AST normalisation, and HOMA-IR. ",
+        },
+        { type: "citation", attrs: { n: 2, label: "EMA·NASH reflection", sourceId: "src_ema_nash" } },
+      ],
+    },
+    {
+      type: "paragraph",
+      content: [
+        {
+          type: "text",
+          text: "A pre-specified DSMB will conduct unblinded safety reviews every 12 weeks following first dosing. ",
+        },
+        { type: "citation", attrs: { n: 11, label: "ICH E6(R3) §5.5", sourceId: "src_ich_dsmb" } },
+        { type: "text", text: " Stopping rules are defined in Section 8.4." },
+      ],
+    },
+  ],
+};
+
+export const MOCK_PROTOCOL_DOC: ProtocolDocument = {
+  id: "doc_map204_protocol_v3",
+  projectId: "proj_map_204",
+  projectCode: "MAP-204",
+  projectTitle: "Onaplazib in NASH",
+  status: "DRAFT",
+  lastEditedBy: "Priya",
+  lastEditedAgo: "14 minutes ago",
+  therapeuticArea: "NASH",
+  phase: "Phase II",
+  complianceMeters: [
+    { framework: "SPIRIT", completed: 32, total: 33 },
+    { framework: "ICH E6(R3)", completed: 27, total: 28 },
+    { framework: "MHRA CTA", completed: 14, total: 18 },
+    { framework: "HRA REC", completed: 9, total: 12 },
+  ],
+  sections: [
+    { id: "sec_01", number: "1", heading: "Synopsis", sourceCount: 1, flaggedCount: 0, gapCount: 0, status: "complete", contentJson: { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: "Summary of the MAP-204 Phase II onaplazib study in NASH." }] }] }, complianceScore: 100 },
+    { id: "sec_02", number: "2", heading: "Background & rationale", sourceCount: 3, flaggedCount: 1, gapCount: 0, status: "flagged", contentJson: { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: "NASH affects an estimated 20% of the adult population in Western countries…" }] }] }, complianceScore: 87 },
+    { id: "sec_03", number: "3", heading: "Objectives & endpoints", sourceCount: 2, flaggedCount: 0, gapCount: 0, status: "complete", contentJson: { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: "Primary objective: demonstrate superiority of onaplazib over placebo on the composite histological endpoint at Week 52." }] }] }, complianceScore: 95 },
+    { id: "sec_04", number: "4", heading: "Study design & schema", sourceCount: 7, flaggedCount: 2, gapCount: 1, status: "draft", contentJson: STUDY_DESIGN_CONTENT, complianceScore: 78 },
+    { id: "sec_05", number: "5", heading: "Eligibility", sourceCount: 4, flaggedCount: 1, gapCount: 0, status: "draft", contentJson: { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: "Inclusion: adults 18–75 years with biopsy-confirmed NASH NAS ≥4…" }] }] }, complianceScore: 82 },
+    { id: "sec_06", number: "6", heading: "Treatments", sourceCount: 2, flaggedCount: 0, gapCount: 0, status: "complete", contentJson: { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: "Onaplazib 30 mg and 60 mg QD oral tablet; matched placebo." }] }] }, complianceScore: 91 },
+    { id: "sec_07", number: "7", heading: "Efficacy assessments", sourceCount: 3, flaggedCount: 0, gapCount: 0, status: "draft", contentJson: { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: "Liver biopsy at Baseline and Week 52 assessed by NASH CRN scoring system." }] }] }, complianceScore: 70 },
+    { id: "sec_08", number: "8", heading: "Safety assessments", sourceCount: 2, flaggedCount: 1, gapCount: 0, status: "flagged", contentJson: { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: "Safety monitoring includes hepatic function panels every 4 weeks." }] }] }, complianceScore: 74 },
+    { id: "sec_09", number: "9", heading: "Statistical plan", sourceCount: 4, flaggedCount: 0, gapCount: 1, status: "draft", contentJson: { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: "Sample size: 320 subjects (80% power, α=0.05, 2-sided)." }] }] }, complianceScore: 65 },
+    { id: "sec_10", number: "10", heading: "Operational procedures", sourceCount: 1, flaggedCount: 0, gapCount: 0, status: "empty", contentJson: { type: "doc", content: [{ type: "paragraph", content: [] }] }, complianceScore: 0 },
+  ],
+  retrievedSources: [
+    { id: "src_fda_adaptive", n: 14, authority: "FDA", title: "Adaptive Designs for Clinical Trials of Drugs and Biologics", relevanceScore: 93, kind: "Guidance", snippet: "Adaptive designs allow for pre-specified modifications based on accumulated data without undermining trial validity or integrity…" },
+    { id: "src_map204_ib", n: 3, authority: "Sponsor", title: "MAP-204 Investigator's Brochure v4", relevanceScore: 91, kind: "Protocol", snippet: "Non-clinical and clinical data supporting the rationale for onaplazib in NASH, including Phase I safety and PK summary…" },
+    { id: "src_ema_sawp", n: 9, authority: "EMA", title: "EMA·SAWP reflection paper — adaptive designs", relevanceScore: 88, kind: "Guideline", snippet: "Scientific considerations for adaptive designs with confirmatory intent under EMA regulatory framework…" },
+    { id: "src_fda_nash", n: 7, authority: "FDA", title: "FDA Guidance for Industry — NASH: Developing Drugs", relevanceScore: 85, kind: "Guidance", snippet: "Histological endpoints (NAS score improvement ≥2 points without fibrosis worsening) are acceptable as primary endpoints for NASH trials…" },
+    { id: "src_spirit_2013", n: 22, authority: "SPIRIT", title: "SPIRIT 2013: Standard Protocol Items", relevanceScore: 84, kind: "Guideline", snippet: "Recommendations for content of clinical trial protocols and the associated explanatory document…" },
+    { id: "src_map204_ib_v4", n: 3, authority: "Sponsor", title: "MAP-204 IB v4", relevanceScore: 91, kind: "Protocol", snippet: "Investigator brochure version 4 incorporating Phase Ib interim data…" },
+    { id: "src_ich_e6", n: 1, authority: "ICH", title: "ICH E6(R3) — Good Clinical Practice", relevanceScore: 96, kind: "Guideline", snippet: "§5.18 Investigational product accountability and §5.5 DSMB requirements under GCP…" },
+    { id: "src_ich_dsmb", n: 11, authority: "ICH", title: "ICH E6(R3) §5.5 — DSMB", relevanceScore: 90, kind: "Guideline", snippet: "Data Safety Monitoring Board charter requirements and interim analysis procedures…" },
+    { id: "src_nash_crn", n: 43, authority: "Internal", title: "NASH CRN Stratification Reference", relevanceScore: 79, kind: "SOP", snippet: "Stratification factors for randomisation per NASH CRN scoring conventions…" },
+    { id: "src_ema_nash", n: 2, authority: "EMA", title: "EMA — NASH reflection paper", relevanceScore: 83, kind: "Guideline", snippet: "Secondary endpoints and MRI-based biomarkers acceptable for NASH trials…" },
+  ],
+  recommendation: {
+    id: "rec_futility_stop",
+    tag: "adaptive",
+    status: "confirmed",
+    text: "Consider adding a futility stop at the interim. In 23 of 27 precedent NASH trials with similar endpoints, futility rules were specified and accepted by FDA at IND review.",
+    confidence: 91,
+    precedentCount: 27,
+    sectionId: "sec_04",
+  },
+  taEvidence: {
+    precedentProtocols: 27,
+    similarTrials: 22,
+    sponsors: ["FDA", "EMA", "Gilead", "Madrigal"],
+    confidence: 93,
+    recruitment: 50,
+  },
 };
 
 export const SAMPLE_KB_INDEX_HEALTH: KbIndexHealth = {
