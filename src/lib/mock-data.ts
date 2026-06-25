@@ -6,6 +6,7 @@ import type { ProtocolDocument } from "@/types/protocol";
 import type { IntelData } from "@/types/intel";
 import type { RegWritingDoc } from "@/types/writing";
 import type { SafetyCase, SafetyNarrative, QueueCase, SafetySignal, CumulativeSafety } from "@/types/safety";
+import type { EthicsApplication, FormSection, RequiredDoc, HraCheck, HraGap, RecMilestone, NihrPortfolio } from "@/types/ethics";
 
 // Legacy aliases — kept while other pages migrate to @/types/*
 export type MockOrganization = Organization;
@@ -1537,5 +1538,121 @@ export const MOCK_CUMULATIVE_SAFETY: CumulativeSafety = {
   totalSusars: 2,
   dsurDue: "15 Aug",
   dsmbNext: "11 Jun",
+};
+
+// ── Ethics & IRAS Assistant (S11) ─────────────────────────────────────────────
+
+export const MOCK_ETHICS_APPLICATION: EthicsApplication = {
+  id: "eth_map204_001",
+  irasId: "IRAS-2024-089432",
+  version: "v2.3",
+  completionPct: 68,
+  projectCode: "MAP-204",
+  projectTitle: "Onaplazib in NASH",
+  jurisdiction: "UK",
+  authority: "HRA / IRAS",
+};
+
+export const MOCK_ETHICS_SECTIONS: FormSection[] = [
+  { id: "sec_a", code: "A", title: "Project details", answeredCount: 16, totalCount: 16, status: "complete" },
+  { id: "sec_b", code: "B", title: "Sponsor / CI", answeredCount: 8, totalCount: 8, status: "complete" },
+  { id: "sec_c", code: "C", title: "Protocol & study design", answeredCount: 10, totalCount: 12, status: "in-progress" },
+  {
+    id: "sec_d",
+    code: "D",
+    title: "Participants & recruitment",
+    answeredCount: 14,
+    totalCount: 17,
+    status: "in-progress",
+    answers: [
+      {
+        id: "ans_d1",
+        questionCode: "D1",
+        question: "What is the total number of participants in the UK sites?",
+        answer: "A total of 180 participants will be enrolled across 14 UK sites, forming part of the global target of 320. Randomisation is 2:1 (onaplazib : placebo) stratified by fibrosis stage (F2 vs F3) and diabetes status.",
+        kind: "auto",
+        sourceRef: "Protocol §3.4",
+        confidence: 0.98,
+      },
+      {
+        id: "ans_d2",
+        questionCode: "D2",
+        question: "What is the planned duration of the recruitment period?",
+        answer: "Recruitment is planned over 18 months (March 2024 – August 2025) with an expected screen failure rate of 38%. Site activation across UK will be staggered over Q1 2024.",
+        kind: "auto",
+        sourceRef: "Protocol §2.1",
+        confidence: 0.92,
+      },
+      {
+        id: "ans_d3",
+        questionCode: "D3",
+        question: "Please summarise the inclusion criteria.",
+        answer: "Adults aged 18–75 years with biopsy-confirmed NASH (NAS ≥4 with fibrosis score F2–F3), BMI 25–45 kg/m², and written informed consent. Full SPIRIT-compliant criteria are detailed in Protocol §5.1.",
+        kind: "auto",
+        sourceRef: "Protocol §5.1",
+        confidence: 0.87,
+      },
+      {
+        id: "ans_d4",
+        questionCode: "D4",
+        question: "Please summarise the exclusion criteria.",
+        answer: "Prior hepatic decompensation, Child-Pugh B/C, active HBV/HCV, pregnancy or breastfeeding, eGFR <30 mL/min/1.73 m², or any condition that, in the investigator's judgement, would preclude safe participation. See Protocol §5.2 for the complete list (22 criteria).",
+        kind: "edited",
+        sourceRef: "Protocol §5.2",
+        confidence: 0.84,
+      },
+    ],
+    pisReadability: {
+      plainEnglish: true,
+      readingAge: 11.4,
+      fleschScore: 58.2,
+      wordCount: 847,
+      sectionCount: 6,
+      hraTemplateVersion: "HRA PIS v3.2",
+    },
+  },
+  { id: "sec_e", code: "E", title: "Research procedures", answeredCount: 6, totalCount: 9, status: "draft" },
+  { id: "sec_f", code: "F", title: "Finance & insurance", answeredCount: 4, totalCount: 8, status: "draft" },
+  { id: "sec_g", code: "G", title: "Indemnity", answeredCount: 3, totalCount: 4, status: "draft" },
+  { id: "sec_h", code: "H", title: "Declarations", answeredCount: 0, totalCount: 5, status: "empty" },
+];
+
+export const MOCK_REQUIRED_DOCS: RequiredDoc[] = [
+  { id: "doc_protocol",   label: "Protocol",                  detail: "v2.1 — 2026-05-14",     status: "submitted"    },
+  { id: "doc_ib",         label: "Investigator's Brochure",   detail: "v4 — 2026-04-01",       status: "submitted"    },
+  { id: "doc_pis_adult",  label: "PIS (adult)",               detail: "In review",             status: "in-progress"  },
+  { id: "doc_icf_adult",  label: "ICF (adult)",               detail: "Awaiting PIS sign-off", status: "in-progress"  },
+  { id: "doc_gp_letter",  label: "GP letter template",        detail: "Draft prepared",        status: "draft"        },
+  { id: "doc_dpia",       label: "DPIA",                      detail: "Required for UK GDPR",  status: "missing"      },
+  { id: "doc_insurance",  label: "Sponsor insurance cert.",   detail: "Confirmed",             status: "submitted"    },
+];
+
+export const MOCK_HRA_CHECKS: HraCheck[] = [
+  { id: "hra1", framework: "UK Policy Framework for Health & Social Care Research", status: "pass" },
+  { id: "hra2", framework: "Equality Act 2010", status: "pass" },
+  { id: "hra3", framework: "Inclusion & Diversity Guidance 2022", status: "warn", note: "Recruitment target includes <30% female — document diversity rationale in section D." },
+  { id: "hra4", framework: "Data Protection Act 2018 / UK GDPR", status: "warn", note: "DPIA not submitted. Required before HRA opinion can be issued." },
+  { id: "hra5", framework: "Mental Capacity Act 2005", status: "n-a" },
+];
+
+export const MOCK_HRA_GAP: HraGap = {
+  message: "DPIA missing in section F12 — required for UK GDPR. Generate from protocol →",
+  sectionRef: "F12",
+  action: "Generate from protocol",
+};
+
+export const MOCK_REC_TIMELINE: RecMilestone[] = [
+  { id: "ms1", label: "Submission",    date: "1 Jul 2026",  status: "upcoming" },
+  { id: "ms2", label: "Validation",   date: "15 Jul 2026", status: "upcoming" },
+  { id: "ms3", label: "REC meeting",  date: "5 Aug 2026",  status: "upcoming" },
+  { id: "ms4", label: "Opinion",      date: "9 Aug 2026",  status: "upcoming" },
+  { id: "ms5", label: "HRA approval", date: "23 Aug 2026", status: "upcoming" },
+];
+
+export const MOCK_NIHR_PORTFOLIO: NihrPortfolio = {
+  eligible: true,
+  studyType: "Clinical trial of medicinal product",
+  category: "Hepatology / NASH",
+  adopted: false,
 };
 

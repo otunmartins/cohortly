@@ -1,12 +1,32 @@
-# Current Feature
+# Current Feature: Ethics & IRAS Assistant (S11)
 
 ## Status
 
-Not Started
+In Progress
 
 ## Goals
 
+- Section A–H progress nav with per-section completion counts and status dots, plus a completion % bar in the left rail
+- Required documents checklist (Protocol, IB, PIS·adult, ICF·adult, GP letter, DPIA, Sponsor insurance) with status icons
+- Center section editor showing per-question answer cards (D1–D4 pattern) with Auto/Edited badge, source citation + confidence %
+- PIS readability card with Plain English, reading age, Flesch score + Preview
+- HRA compliance rail (UK Policy Framework, Equality Act, Inclusion & Diversity, DPA 2018, Mental Capacity Act — pass/warn/n-a) + gap callout with Generate from protocol CTA
+- REC review timeline (Submission → Validation → REC meeting → Opinion → HRA approval)
+- NIHR portfolio eligibility card with Adopt to portfolio action
+- TopBar: breadcrumb "Ethics & IRAS · MAP-204 · IRAS application", Submission pack, Submit to HRA
+- All data from mock layer (`src/lib/data/ethics.ts`) against `src/lib/mock-data.ts`; stub server actions (`autoPopulateSection`, `editAnswer`, `generateDocument`, `submitToHra`, `downloadSubmissionPack`)
+
 ## Notes
+
+- Route: `app/(app)/ethics/[id]/page.tsx` — this is screen S11
+- Mock phase only: answers shown as if already generated (from mock data). RAG wiring is AI phase — stub "Auto-populate" and "Generate from protocol" calls.
+- New types: `src/types/ethics.ts` (`EthicsApplication`, `FormSection`, `IrasAnswer`, `RequiredDoc`, `HraCheck`, `RecMilestone`, `NihrPortfolio`)
+- New data layer: `src/lib/data/ethics.ts` wrapping mock data
+- New actions: `src/actions/ethics.ts` (stub, with audit scaffolding)
+- New components: `IrasSectionNav`, `RequiredDocsChecklist`, `HraComplianceRail`, `RecTimeline`, `NihrPortfolioCard`, `EthicsClient`
+- Reuse: `<Confidence/>`, `<Citation/>`, `<AIDraftBlock/>` (for any answer with low confidence flagged)
+- Compliance: auto-populated answers carry source + confidence; edits flip badge to Edited and are audited; tenant-scoped; UK data residency
+- shadcn components: `Accordion`, `Progress`, `Badge`, `Card`, `Button`
 
 ## History
 
