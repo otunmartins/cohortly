@@ -3,6 +3,8 @@ import type { InboxThread } from "@/types/inbox";
 import type { KbAnswer, KbIndexHealth } from "@/types/knowledge";
 import type { Organization, User, Project } from "@/types/project";
 import type { ProtocolDocument } from "@/types/protocol";
+import type { IntelData } from "@/types/intel";
+import type { RegWritingDoc } from "@/types/writing";
 
 // Legacy aliases — kept while other pages migrate to @/types/*
 export type MockOrganization = Organization;
@@ -1074,6 +1076,250 @@ export const MOCK_FEASIBILITY_MAP204 = {
     { nct: "NCT05096715", sponsor: "Novo Nordisk",     n: 1200, enrolledPct: 44, phase: "Phase III", indication: "NASH F2–F3", dataAsOf: "2026-06-01" },
     { nct: "NCT05312372", sponsor: "AstraZeneca",      n: 480,  enrolledPct: 29, phase: "Phase II",  indication: "NASH F2–F3", dataAsOf: "2026-06-01" },
     { nct: "NCT05481567", sponsor: "Pfizer",           n: 320,  enrolledPct: 18, phase: "Phase II",  indication: "NASH F2–F3", dataAsOf: "2026-06-01" },
+  ],
+};
+
+// ── Competitive Intelligence (S13) ───────────────────────────────────────────
+
+export const MOCK_INTEL_NASH: IntelData = {
+  indication: "NASH / MASH",
+  therapeuticArea: "Hepatology",
+  outlookMonths: 18,
+  summary:
+    "Tracking 47 active trials, 4 approved therapies, 3 milestones impacting your MAP-204 programme in the next 6 months.",
+  kpis: {
+    activeTrials: 47,
+    activeTrialsDelta: 3,
+    newApproval: "Resmetirom · first FDA approval",
+    poolOverlapPct: 62,
+    poolOverlapLabel: "High",
+    siteCollisions: 14,
+    totalSites: 28,
+    regMilestones: 3,
+    dataAsOf: "2026-06-01",
+  },
+  competingTrials: [
+    { nct: "NCT04990908", name: "Resmetirom (Rezdiffra)",    sponsor: "Madrigal Pharma",  phase: "Phase III", n: 700,  enrolledPct: 82, threat: "high",   ukOverlap: true,  dataAsOf: "2026-06-01" },
+    { nct: "NCT05020496", name: "Firsocostat + Semaglutide", sponsor: "Gilead Sciences",  phase: "Phase III", n: 960,  enrolledPct: 61, threat: "high",   ukOverlap: true,  dataAsOf: "2026-06-01" },
+    { nct: "NCT05096715", name: "CagriSema",                 sponsor: "Novo Nordisk",     phase: "Phase III", n: 1200, enrolledPct: 44, threat: "high",   ukOverlap: false, dataAsOf: "2026-06-01" },
+    { nct: "NCT05312372", name: "Zibotentan",                sponsor: "AstraZeneca",      phase: "Phase II",  n: 480,  enrolledPct: 29, threat: "medium", ukOverlap: true,  dataAsOf: "2026-06-01" },
+    { nct: "NCT05481567", name: "PF-06863135",               sponsor: "Pfizer",           phase: "Phase II",  n: 320,  enrolledPct: 18, threat: "medium", ukOverlap: false, dataAsOf: "2026-06-01" },
+    { nct: "NCT05800782", name: "IMM-124E",                  sponsor: "Immuron",          phase: "Phase II",  n: 160,  enrolledPct: 7,  threat: "low",    ukOverlap: false, dataAsOf: "2026-06-01" },
+    { nct: "NCT06100224", name: "AZD9550",                   sponsor: "AstraZeneca",      phase: "Phase II",  n: 240,  enrolledPct: 4,  threat: "low",    ukOverlap: false, dataAsOf: "2026-06-01" },
+  ],
+  labelDecisions: [
+    { id: "ld1", drug: "Resmetirom (Rezdiffra)",  authority: "FDA",  decision: "Approved",              date: "2024-03-14" },
+    { id: "ld2", drug: "Semaglutide (NASH ind.)", authority: "EMA",  decision: "Under review",          date: "2025-11-02" },
+    { id: "ld3", drug: "Lanifibranor",            authority: "EMA",  decision: "CHMP positive opinion", date: "2025-08-19" },
+    { id: "ld4", drug: "Elafibranor (Iqirvo)",    authority: "MHRA", decision: "Authorised",            date: "2025-04-07" },
+  ],
+  cliffWatch: [
+    { id: "cw1", drug: "Resmetirom US",     kind: "patent",      date: "2028-06-15", daysUntil: 720  },
+    { id: "cw2", drug: "Lanifibranor EP3",  kind: "exclusivity", date: "2027-11-30", daysUntil: 523  },
+    { id: "cw3", drug: "Obeticholic acid",  kind: "exclusivity", date: "2026-09-01", daysUntil: 68   },
+    { id: "cw4", drug: "Elafibranor EU",    kind: "exclusivity", date: "2033-04-07", daysUntil: 2507 },
+  ],
+  siteOverlap: {
+    yourSites:        ["Royal Free", "Edinburgh Royal", "Manchester UHFT", "King's College"],
+    competitors:      ["NCT04990908", "NCT05020496", "NCT05096715"],
+    competitorNames:  ["Resmetirom (Madrigal)", "Firsocostat (Gilead)", "CagriSema (Novo)"],
+    cells: [
+      [3, 2, 2, 1],
+      [2, 1, 2, 2],
+      [1, 0, 1, 0],
+    ],
+    atRiskCount: 3,
+  },
+};
+
+// ── Regulatory Writing (S10) ──────────────────────────────────────────────────
+
+export const MOCK_REG_WRITING_DOC: RegWritingDoc = {
+  id: "doc_ind019_274",
+  projectCode: "IND-019",
+  projectTitle: "Onaplazib",
+  docType: "CTD_2_7",
+  moduleNumber: "2.7",
+  sectionNumber: "2.7.4",
+  sectionHeading: "Summary of Clinical Safety",
+  version: "v3",
+  editCount: 14,
+  lastEditedBy: "Priya Shah",
+  lastEditedAgo: "12 min ago",
+  status: "IN_REVIEW",
+  contentHash: "sha256:4a9f2c1e8b3d7f0e5c2a6b9d1e4f7c0a3b6d9e2f5a8c1b4e7f0a3d6c9b2e5f8a1",
+  contentJson: {
+    type: "doc",
+    content: [
+      {
+        type: "paragraph",
+        content: [
+          {
+            type: "text",
+            text: "Onaplazib was administered to 198 patients with NASH fibrosis stages F2–F3 across the MAP-204 Phase II study. The overall safety profile was characterised by a low rate of serious adverse events (SAEs) and no dose-limiting toxicities at the 40 mg once-daily dose level. ",
+          },
+          { type: "citation", attrs: { n: 2, label: "CSR", sourceId: "src_csr_001" } },
+          { type: "citation", attrs: { n: 4, label: "CSR", sourceId: "src_csr_002" } },
+        ],
+      },
+      {
+        type: "paragraph",
+        content: [
+          {
+            type: "text",
+            text: "Treatment-emergent adverse events (TEAEs) were reported in 74.2% of patients in the onaplazib 40 mg arm versus 68.9% in the placebo arm. The most common TEAEs (≥5% in either arm) were nausea (14.1% vs 9.8%), headache (11.6% vs 10.2%), and fatigue (9.6% vs 11.4%). The integrated safety summary across the MAP-204 programme supports a favourable benefit–risk profile consistent with published Phase II NASH precedents. ",
+          },
+          { type: "citation", attrs: { n: 11, label: "ISS", sourceId: "src_iss_001" } },
+          { type: "citation", attrs: { n: 13, label: "ISS", sourceId: "src_iss_002" } },
+        ],
+      },
+      {
+        type: "paragraph",
+        content: [
+          {
+            type: "text",
+            text: "Hepatic safety was closely monitored in line with FDA guidance on DILI assessment. ALT elevations ≥3× ULN were observed in 3.5% of onaplazib-treated patients, all resolving within 4 weeks of dose interruption, with no cases meeting Hy's Law criteria. ",
+          },
+          { type: "citation", attrs: { n: 20, label: "FDA·DILI", sourceId: "src_fda_dili" } },
+          { type: "citation", attrs: { n: 7, label: "DSUR", sourceId: "src_dsur_001" } },
+        ],
+      },
+      {
+        type: "paragraph",
+        content: [
+          {
+            type: "text",
+            text: "Cardiac safety was evaluated per ICH E14 guidelines with centralised QTcF analysis. No clinically meaningful QTcF prolongation was observed (mean ΔQTcF = +2.1 ms; upper 90% CI = +4.7 ms), with no subjects exceeding 500 ms or demonstrating ΔQTcF > 60 ms. ",
+          },
+          { type: "citation", attrs: { n: 15, label: "ICH E14", sourceId: "src_ich_e14" } },
+        ],
+      },
+    ],
+  },
+  citations: [
+    { n: 2,  sourceId: "src_csr_001",  label: "CSR",      authority: "Internal", title: "MAP-204 Clinical Study Report v1.2",                    kind: "CSR" },
+    { n: 4,  sourceId: "src_csr_002",  label: "CSR",      authority: "Internal", title: "MAP-204 CSR Appendix 14.3 — AE Listings",                kind: "CSR" },
+    { n: 7,  sourceId: "src_dsur_001", label: "DSUR",     authority: "Internal", title: "MAP-204 Development Safety Update Report Year 2",         kind: "DSUR" },
+    { n: 11, sourceId: "src_iss_001",  label: "ISS",      authority: "Internal", title: "Integrated Summary of Safety — Module 5.3.5.1",           kind: "ISS" },
+    { n: 13, sourceId: "src_iss_002",  label: "ISS",      authority: "Internal", title: "ISS Appendix B — Subgroup Safety Analysis",               kind: "ISS" },
+    { n: 15, sourceId: "src_ich_e14",  label: "ICH E14",  authority: "ICH",      title: "ICH E14 Guideline — QT/QTc Interval Evaluation",         kind: "Guideline" },
+    { n: 20, sourceId: "src_fda_dili", label: "FDA·DILI", authority: "FDA",      title: "FDA Guidance — Drug-Induced Liver Injury (2009)",         kind: "Guidance" },
+  ],
+  aiDraftBlock: {
+    id: "aib_274_renal",
+    text: "Renal safety: No clinically meaningful changes in eGFR were observed in onaplazib-treated patients at 40 mg (mean change from baseline: −1.2 mL/min/1.73 m²; 95% CI: −2.8 to +0.4). Incidence of adverse events of special interest for renal function (eGFR decline ≥30%) was 1.5% vs 2.0% in placebo, consistent with background rates in NASH F2–F3 populations reported in precedent Phase II programmes.",
+    confidence: 0.81,
+    sourceCount: 5,
+    modelVersion: "cohortly-v3",
+    status: "pending",
+  },
+  comments: [
+    {
+      id: "cmt_001",
+      author: "James Hartley",
+      authorInitials: "JH",
+      role: "QA Reviewer",
+      body: "SAE incidence reported here as 3.5% — confirm alignment with §5.3.5.1 ISS table which shows 3.8%. Needs reconciliation before sign-off.",
+      timestamp: "2026-06-24 09:14",
+      kind: "human",
+      resolved: false,
+    },
+    {
+      id: "cmt_002",
+      author: "Priya Shah",
+      authorInitials: "PS",
+      role: "RA Lead",
+      body: "The 3.5% figure excludes one site (ERI) which had a data-lock anomaly. ISS was updated to 3.5% in v1.3 — ISS reference here is pointing to v1.2. Updating citation.",
+      timestamp: "2026-06-24 11:02",
+      kind: "human",
+      resolved: false,
+    },
+    {
+      id: "cmt_003",
+      author: "Cohortly AI",
+      authorInitials: "AI",
+      role: "AI Assistant",
+      body: "Detected: citation [11] links to ISS v1.2 (src_iss_001). Current version in KB is v1.3. Suggest updating source reference to resolve consistency check flag.",
+      timestamp: "2026-06-24 11:05",
+      kind: "ai",
+      confidence: 0.94,
+      resolved: false,
+    },
+  ],
+  history: [
+    { id: "h1", actor: "Cohortly AI",  actorInitials: "AI", action: "Generated §2.7.4 draft (14 sources, confidence 0.84)", timestamp: "2026-06-23 15:30", kind: "ai" },
+    { id: "h2", actor: "Priya Shah",   actorInitials: "PS", action: "Accepted hepatic safety paragraph; edited TEAE table",  timestamp: "2026-06-23 16:45", kind: "human" },
+    { id: "h3", actor: "James Hartley",actorInitials: "JH", action: "Submitted for QA review",                               timestamp: "2026-06-24 08:55", kind: "human" },
+    { id: "h4", actor: "System",       actorInitials: "SY", action: "Consistency check flagged ISS version mismatch",         timestamp: "2026-06-24 09:00", kind: "system" },
+    { id: "h5", actor: "Priya Shah",   actorInitials: "PS", action: "Replied to comment cmt_001; citation update pending",   timestamp: "2026-06-24 11:02", kind: "human" },
+  ],
+  modules: [
+    {
+      id: "m1", number: "1", heading: "Regional & Administrative", status: "draft", children: [],
+    },
+    {
+      id: "m2", number: "2", heading: "Common Technical Document Summaries", status: "draft",
+      children: [
+        { id: "m23", number: "2.3", heading: "Quality Overall Summary",         status: "complete" },
+        { id: "m24", number: "2.4", heading: "Nonclinical Overview",            status: "complete" },
+        { id: "m25", number: "2.5", heading: "Clinical Overview",               status: "review" },
+        {
+          id: "m27", number: "2.7", heading: "Clinical Summaries", status: "draft",
+          children: [
+            { id: "m271", number: "2.7.1", heading: "Summary of Biopharmaceutic Studies",   status: "complete" },
+            { id: "m272", number: "2.7.2", heading: "Summary of Clinical Pharmacology",     status: "complete" },
+            { id: "m273", number: "2.7.3", heading: "Summary of Clinical Efficacy",         status: "review" },
+            { id: "m274", number: "2.7.4", heading: "Summary of Clinical Safety",           status: "draft" },
+            { id: "m275", number: "2.7.5", heading: "References",                           status: "empty" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "m3", number: "3", heading: "Quality", status: "complete", children: [],
+    },
+    {
+      id: "m4", number: "4", heading: "Nonclinical Study Reports", status: "complete", children: [],
+    },
+    {
+      id: "m5", number: "5", heading: "Clinical Study Reports", status: "review", children: [],
+    },
+  ],
+  consistencyIssues: [
+    {
+      id: "ci1",
+      kind: "cross-module",
+      label: "SAE % mismatch",
+      severity: "error",
+      detail: "§2.7.4 reports 3.5% vs ISS §5.3.5.1 which shows 3.8% — reconcile before sign-off.",
+    },
+    {
+      id: "ci2",
+      kind: "reference",
+      label: "ISS version mismatch",
+      severity: "warning",
+      detail: "Citation [11] links to ISS v1.2; current version is v1.3.",
+    },
+    {
+      id: "ci3",
+      kind: "terminology",
+      label: "TEAE not MedDRA-mapped",
+      severity: "warning",
+      detail: "\"fatigue\" in §2.7.4 para 2 not mapped to preferred MedDRA PT (Fatigue, MedDRA 10016256).",
+    },
+    {
+      id: "ci4",
+      kind: "numbering",
+      label: "Numbering OK",
+      severity: "ok",
+      detail: "All section and table numbers are consistent across modules.",
+    },
+  ],
+  docHealth: [
+    { label: "Source-traceable",  value: 88, target: 90 },
+    { label: "Terminology",       value: 74, target: 95 },
+    { label: "SPIRIT",            value: 91, target: 85 },
+    { label: "Plain-English",     value: 38, target: 35, unit: "Flesch" },
   ],
 };
 

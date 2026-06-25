@@ -4,6 +4,8 @@
 > Screenshot: `@context/screenshots/competitive-intelligence.png`
 > References: `@project-overview.md` (§5 S13, §7 `CompetingTrial`/`Approval`/`Site`), `@coding-standards.md` (Part B), `@ai-interaction.md`
 
+> 🧱 **Mock phase (now):** Build the KPI strip, competing-trials table, label decisions, cliff watch, and site-overlap heatmap against `competitiveKpis`, `competingTrials`, `labelDecisions`, `cliffWatch`, and `siteOverlap` from `@/src/lib/mock-data.ts` via a thin `src/lib/data/intel.ts` function. **Stub** Configure alerts and Export landscape report. Trial/overlap data comes from **text-to-SQL over AACT**, and label/feed data from sync jobs — both in the **AI/AACT phase**; mock them now. The sections below describe the target state.
+
 ## Purpose
 Therapeutic-area landscape and threat tracking: who's recruiting, recent approvals/label decisions, patent cliffs, and where competitors collide with your sites.
 
