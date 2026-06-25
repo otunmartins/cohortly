@@ -1,31 +1,12 @@
-# Current Feature: Safety & Pharmacovigilance (S12)
+# Current Feature
 
 ## Status
 
-In Progress
+Not Started
 
 ## Goals
 
-- Narrative queue page (`/safety`) listing SAE cases with due-window badges and confidence scores
-- SAE detail page (`/safety/[saeId]`) with 3-pane layout: structured case panel (left), narrative tabs (center), queue + signals + cumulative rail (right)
-- `CaseDataPanel` — demographics, MedDRA event, concomitant meds, relevant history; expedited badge + reporting clock
-- `NarrativeEditor` — AI-drafted narrative via `<AIDraftBlock/>` with highlighted CRF fields; Narrative / Timeline / Labs tabs; footer metrics (clock, template adherence, MedDRA accuracy, regulatory destinations)
-- `NarrativeQueue` — other SAEs with due-window countdown and confidence indicators
-- `SignalDetectionCard` — possible signal (neutropenia n=4, PRR=4.2, χ²=8.9) with Open assessment CTA
-- `CumulativeSafety` — SAE/SUSAR totals, DSUR due date, DSMB next date for MAP-204
-- TopBar: breadcrumb "Safety & PV · SAE-1142 · Subject 04-218", **Due in 3d 4h** countdown, E2B(R3) export button, Medical sign-off button
-- Mock data in `src/lib/data/safety.ts` backed by types in `src/types/safety.ts`
-- Stub server actions: `generateNarrative`, `acceptNarrativeSuggestion`, `rejectNarrativeSuggestion`, `medicalSignOff`, `exportE2b`
-- Tenant-scoped; no PHI in logs; loading/empty/error states; keyboard accessible
-
 ## Notes
-
-- Route: `app/(app)/safety/page.tsx` (queue) + `app/(app)/safety/[saeId]/page.tsx`
-- Mock phase: all data from `src/lib/data/safety.ts`; no live AI or E2B XML generation
-- Reuse `<Confidence/>` and `<AIDraftBlock/>` shared components (already built)
-- Reporting clocks are regulatory deadlines — display prominently with colour-coded urgency
-- Medical sign-off stubs the e-sign + audit lock flow (same pattern as `signOffDocument` in writing)
-- Screenshot reference: `context/screenshots/safety-and-pv.png`
 
 ## History
 
@@ -40,3 +21,4 @@ In Progress
 - **2026-06-25** — Feasibility Simulator (S09) built: 5-KPI strip (Time to N, Eligible pool, Activation cost, Prob. of success, Critical path), Recharts `ComposedChart` enrolment forecast with P10/P50/P90 bands + 95% CI + sponsor plan/target dashed reference lines + N=320 marker, scenario levers rail (3 sliders: sites/UK allocation/screen-failure %; 4 toggles: adaptive interim/NIHR portfolio/DCT/patient stipend; Run 1,000 simulations button), site landscape (UK/EU/US tabs, top-12 projected rate bars), competing trials table (mock AACT data, threat badges). `FeasibilityKpiHeader`, `EnrolmentForecastChart`, `ScenarioLevers`, `SiteLandscape`, `CompetingTrialsList`, `FeasibilityClient` components. Stub server actions (`runFeasibility`, `lockBaseline`, `duplicateScenario`) with audit scaffolding. New `src/types/feasibility.ts`, `src/lib/data/feasibility.ts`. Installed recharts. TopBar updated with feasibility breadcrumb, Duplicate scenario, Lock baseline. Merged to main.
 - **2026-06-25** — Competitive Intelligence (S13) built: KPI strip (active trials Δ, new approvals, patient pool overlap %, site collisions, reg milestones), competing trials table (All/Phase III/Phase II/UK overlap tabs, threat badges, enrolled progress bars), label decisions rail (FDA/EMA/MHRA), patent & exclusivity cliff watch, site-overlap heatmap (your sites × competitor trials, at-risk count). `IntelKpiHeader`, `CompetingTrialsTable`, `LabelDecisionsRail`, `CliffWatch`, `SiteOverlapHeatmap`, `IntelClient` components. Stub server actions (`configureAlerts`, `exportLandscapeReport`). New `src/types/intel.ts`, `src/lib/data/intel.ts`, `src/actions/intel.ts`. TopBar updated with Competitive Intel breadcrumb + Configure alerts + Export landscape report. Merged to main.
 - **2026-06-25** — Regulatory Writing (S10) built: 3-pane eCTD module authoring for IND-019 Onaplazib §2.7.4 Summary of Clinical Safety. Left rail: eCTD module tree (Modules 1–5, recursive children, status icons) + Consistency Check panel (error/warning/ok with expandable details). Center: TipTap editor with CitationNode inline chips + reviewer flag annotation + `<AIDraftBlock/>` (renal safety draft, confidence 81%, gated on human accept/reject). Right rail: Comments/Sources/History tabs (human + AI comments with confidence, 7 cited sources, 5-entry audit trail) + Document Health meters (Source-traceable 88%, Terminology 74%, SPIRIT 91%, Flesch 38) + provenance block (21 CFR 11, content hash). `EctdModuleTree`, `ConsistencyCheck`, `DocHealthRail`, `CommentThread`, `RegWritingClient` components. Stub server actions (`saveWritingSection`, `acceptWritingSuggestion`, `rejectWritingSuggestion`, `addWritingComment`, `exportEctd`, `signOffDocument`). New `src/types/writing.ts`, `src/lib/data/writing.ts`, `src/actions/writing.ts`. TopBar updated with writing breadcrumb + Export eCTD + Sign-off. Merged to main.
+- **2026-06-25** — Safety & PV (S12) built: /safety queue page grouped by overdue/urgent/upcoming with cumulative KPI strip (SAE/SUSAR totals, DSUR due, DSMB next). /safety/[saeId] 3-pane layout: `CaseDataPanel` (expedited/SUSAR badges, colour-coded reporting clock, demographics, MedDRA event, concomitant meds, relevant history), `NarrativeEditor` (Narrative/Timeline/Labs tabs, amber-highlighted CRF fields, `<AIDraftBlock/>`, footer metrics), right rail with `NarrativeQueue` + `SignalDetectionCard` (neutropenia PRR=4.2, χ²=8.9) + `CumulativeSafetyCard`. TopBar: Safety & PV breadcrumb + Due in 3d 4h countdown + E2B(R3) + Medical sign-off. Stub server actions (`generateNarrative`, `acceptNarrativeSuggestion`, `rejectNarrativeSuggestion`, `medicalSignOff`, `exportE2b`). New `src/types/safety.ts`, `src/lib/data/safety.ts`, `src/actions/safety.ts`. Merged to main.
