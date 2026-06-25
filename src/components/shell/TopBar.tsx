@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Bell, Search, Menu, Upload, Plus, Save, LayoutTemplate, GitBranch, Share2, SendHorizonal, RefreshCw, Copy, Lock, SlidersHorizontal, Download, PackageOpen, PenLine } from "lucide-react";
+import { Bell, Search, Menu, Upload, Plus, Save, LayoutTemplate, GitBranch, Share2, SendHorizonal, RefreshCw, Copy, Lock, SlidersHorizontal, Download, PackageOpen, PenLine, FileOutput, Stethoscope } from "lucide-react";
 
 const ROUTE_TITLES: Record<string, string> = {
   "/dashboard": "Dashboard",
@@ -39,6 +39,7 @@ export function TopBar({ onMenuOpen }: TopBarProps) {
   const isFeasibilitySimulator = pathname.startsWith("/feasibility/");
   const isCompetitiveIntel = pathname === "/intel";
   const isRegulatoryWriting = pathname.startsWith("/writing/");
+  const isSafetyCase = pathname.startsWith("/safety/");
 
   return (
     <header className="h-10 flex items-center gap-3 px-4 bg-paper-50 border-b border-paper-200 shrink-0">
@@ -53,7 +54,17 @@ export function TopBar({ onMenuOpen }: TopBarProps) {
 
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 min-w-0">
-        {isRegulatoryWriting ? (
+        {isSafetyCase ? (
+          <>
+            <span className="text-[11px] text-[oklch(55%_0.01_240)] truncate">Safety &amp; PV</span>
+            <span className="text-[11px] text-[oklch(70%_0.01_240)]">·</span>
+            <span className="text-[11px] font-mono text-[oklch(40%_0.01_240)]">SAE-1142</span>
+            <span className="text-[11px] text-[oklch(70%_0.01_240)]">·</span>
+            <span className="text-[11px] font-semibold text-[oklch(20%_0.01_240)] truncate">
+              Subject 04-218
+            </span>
+          </>
+        ) : isRegulatoryWriting ? (
           <>
             <span className="text-[11px] text-[oklch(55%_0.01_240)] truncate">Regulatory writing</span>
             <span className="text-[11px] text-[oklch(70%_0.01_240)]">·</span>
@@ -145,6 +156,29 @@ export function TopBar({ onMenuOpen }: TopBarProps) {
       </div>
 
       {/* Page-specific actions */}
+      {isSafetyCase && (
+        <div className="flex items-center gap-1.5">
+          <span
+            className="text-[11px] font-semibold font-mono text-[oklch(50%_0.16_75)] hidden sm:block"
+            aria-label="Due in 3 days 4 hours"
+          >
+            Due in 3d 4h
+          </span>
+          <button className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium text-[oklch(30%_0.01_240)] border border-paper-200 rounded-md hover:bg-paper-200 transition-colors">
+            <FileOutput size={11} aria-hidden="true" />
+            E2B(R3)
+          </button>
+          <button
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-semibold text-white rounded-md transition-colors"
+            style={{ backgroundColor: "oklch(58% 0.10 185)" }}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "oklch(45% 0.09 185)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "oklch(58% 0.10 185)"; }}
+          >
+            <Stethoscope size={11} aria-hidden="true" />
+            Medical sign-off
+          </button>
+        </div>
+      )}
       {isRegulatoryWriting && (
         <div className="flex items-center gap-1.5">
           <span className="text-[10px] font-mono text-[oklch(55%_0.01_240)] hidden sm:block">v3 · 14 edits</span>
