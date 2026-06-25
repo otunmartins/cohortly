@@ -4,6 +4,8 @@
 > Screenshot: `@context/screenshots/ethics-and-iras.png`
 > References: `@project-overview.md` (§5 S11, §7 `EthicsApplication`/`FormSection`), `@coding-standards.md`, `@ai-interaction.md`
 
+> 🧱 **Mock phase (now):** Build the section nav (A–H), required-docs checklist, auto-populated answer cards, HRA compliance rail, REC timeline, and NIHR portfolio UI against `irasApplication`, `requiredDocuments`, `hraChecks`, `hraGap`, `recTimeline`, and `nihrPortfolio` from `@/src/lib/mock-data.ts` via a thin `src/lib/data/ethics.ts` function. **Stub** auto-populate/Generate (answers shown from mock as if generated), "Generate from protocol" (e.g. DPIA), and Submit to HRA. The RAG answer-generation wiring lands in the **AI phase**. The sections below describe the target state.
+
 ## Purpose
 Assemble a UK HRA/IRAS application: auto-populate answers from the protocol, track completion + required documents, check HRA compliance, and prep the REC/NIHR pack.
 
