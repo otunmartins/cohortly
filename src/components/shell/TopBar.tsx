@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Bell, Search, Menu, Upload, Plus, Save, LayoutTemplate, GitBranch, Share2, SendHorizonal, RefreshCw } from "lucide-react";
+import { Bell, Search, Menu, Upload, Plus, Save, LayoutTemplate, GitBranch, Share2, SendHorizonal, RefreshCw, Copy, Lock } from "lucide-react";
 
 const ROUTE_TITLES: Record<string, string> = {
   "/dashboard": "Dashboard",
@@ -36,6 +36,7 @@ export function TopBar({ onMenuOpen }: TopBarProps) {
   const isProtocolEditor =
     pathname.startsWith("/protocols/") && pathname !== "/protocols/new";
   const isEligibilityEngine = pathname.startsWith("/eligibility/");
+  const isFeasibilitySimulator = pathname.startsWith("/feasibility/");
 
   return (
     <header className="h-10 flex items-center gap-3 px-4 bg-paper-50 border-b border-paper-200 shrink-0">
@@ -56,6 +57,16 @@ export function TopBar({ onMenuOpen }: TopBarProps) {
             <span className="text-[11px] text-[oklch(70%_0.01_240)]">·</span>
             <span className="text-[11px] font-semibold text-[oklch(20%_0.01_240)] truncate">
               New protocol
+            </span>
+          </>
+        ) : isFeasibilitySimulator ? (
+          <>
+            <span className="text-[11px] text-[oklch(55%_0.01_240)]">Feasibility</span>
+            <span className="text-[11px] text-[oklch(70%_0.01_240)]">·</span>
+            <span className="text-[11px] font-mono text-[oklch(40%_0.01_240)]">MAP-204</span>
+            <span className="text-[11px] text-[oklch(70%_0.01_240)]">·</span>
+            <span className="text-[11px] font-semibold text-[oklch(20%_0.01_240)] truncate">
+              NASH Ph II
             </span>
           </>
         ) : isEligibilityEngine ? (
@@ -112,6 +123,23 @@ export function TopBar({ onMenuOpen }: TopBarProps) {
       </div>
 
       {/* Page-specific actions */}
+      {isFeasibilitySimulator && (
+        <div className="flex items-center gap-1.5">
+          <button className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium text-[oklch(30%_0.01_240)] border border-paper-200 rounded-md hover:bg-paper-200 transition-colors">
+            <Copy size={11} aria-hidden="true" />
+            Duplicate scenario
+          </button>
+          <button
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-semibold text-white rounded-md transition-colors"
+            style={{ backgroundColor: "oklch(58% 0.10 185)" }}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "oklch(45% 0.09 185)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "oklch(58% 0.10 185)"; }}
+          >
+            <Lock size={11} aria-hidden="true" />
+            Lock baseline
+          </button>
+        </div>
+      )}
       {isEligibilityEngine && (
         <div className="flex items-center gap-1.5">
           <button className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium text-[oklch(30%_0.01_240)] border border-paper-200 rounded-md hover:bg-paper-200 transition-colors">

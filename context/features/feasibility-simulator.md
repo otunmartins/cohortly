@@ -4,6 +4,8 @@
 > Screenshot: `@context/screenshots/trial-feasibility.png`
 > References: `@project-overview.md` (§5 S09, §7 `FeasibilityRun`/`Site`/`CompetingTrial`), `@coding-standards.md` (Part B), `@ai-interaction.md`
 
+> 🧱 **Mock phase (now):** Build the KPI row, enrolment-forecast chart, scenario levers, site landscape, and competing-trials UI against `feasibilityKpis`, `enrolmentForecast`, `monteCarloSeed`, `sites`, and `competingTrials` from `@/src/lib/mock-data.ts` via a thin `src/lib/data/feasibility.ts` function. **Stub** "Run simulations" (return the mock forecast — no Monte-Carlo job), Lock baseline, and Duplicate. Competing trials come from **AACT (text-to-SQL) in the AACT phase** — mock them now. The sections below describe the target state.
+
 ## Purpose
 Monte-Carlo enrolment + scenario simulation: forecast time-to-N under different levers, compare to sponsor plan/target, and see site landscape + competing trials.
 

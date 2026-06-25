@@ -1,16 +1,31 @@
-# Current Feature
+# Current Feature: Feasibility Simulator (S09)
 
 ## Status
 
-Not Started
+In Progress
 
 ## Goals
 
-<!-- Add goals here -->
+- Render KPI row: Time to N=320, Eligible pool, Activation cost, Probability of success, Critical path
+- Enrolment forecast chart (Recharts): P10/P50/P90 + CI band vs Sponsor plan and Target lines; Monte Carlo seed label + Re-simulate button
+- Scenario levers rail: sliders (Sites activated, UK allocation %, Screen-failure %) + toggles (Adaptive interim, NIHR portfolio, DCT, Patient stipend); Run 1,000 simulations button
+- Site landscape: UK/EU/US tabs; top-12 sites with projected enrolment/month bars
+- Competing trials panel: recruiting NASH F2–F3 table (NCT, sponsor, N, % enrolled) from mock AACT data
+- TopBar: breadcrumb, Duplicate scenario, Lock baseline actions
+- States: simulating (progress), empty (no run yet → prompt), error
+- Stub server actions: `runFeasibility`, `lockBaseline`, `duplicateScenario` with audit scaffolding
+- All data from `src/lib/data/feasibility.ts` backed by mock data — no real Monte Carlo
 
 ## Notes
 
-<!-- Add notes here -->
+- Route: `app/(app)/feasibility/[id]/page.tsx` · Screen S09 · Nav: Intelligence
+- Client islands for chart + levers; server-fetched KPIs and initial data passed as props
+- Components: `EnrolmentForecastChart`, `ScenarioLevers`, `SiteLandscape`, `CompetingTrialsList`, `FeasibilityKpiHeader`, `FeasibilityClient`
+- shadcn: `Slider`, `Switch`, `Tabs`, `Card`, `Button`; Recharts for the forecast area chart
+- Competing trials are mocked now; real AACT text-to-SQL comes in a later phase
+- Lever change → triggers re-simulate stub → chart + KPIs update from recomputed mock
+- Lock baseline and Duplicate scenario are audited actions (stub)
+- Tenant-scoped; a11y; responsive (mobile collapses levers to sheet)
 
 ## History
 
