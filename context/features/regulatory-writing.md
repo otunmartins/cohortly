@@ -4,6 +4,8 @@
 > Screenshot: `@context/screenshots/regulatory-writing.png`
 > References: `@project-overview.md` (§5 S10, §7 `Document`/`Citation`/`Comment`), `@coding-standards.md` (§A8, §A10), `@ai-interaction.md`
 
+> 🧱 **Mock phase (now):** Build the eCTD module tree, TipTap editor, consistency check, comments, doc-health meters, and the AI-drafted block UI against `ectdModules`, `consistencyChecks`, and `regWritingDoc` from `@/src/lib/mock-data.ts` via a thin `src/lib/data/writing.ts` function. **Stub** Generate, accept/edit/reject, Sign-off/e-signature, and Export eCTD (UI state only — no `/api/generate`, no real lock/hash). The RAG generation + e-sign/audit wiring lands in later phases. The sections below describe the target state.
+
 ## Purpose
 eCTD module authoring (e.g. IND-019, Module 2.7 Clinical Summary): draft regulated sections with grounded generation, cross-module consistency checks, reviewer comments, and provenance — then export eCTD.
 
