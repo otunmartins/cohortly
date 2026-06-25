@@ -4,6 +4,8 @@
 > Screenshot: `@context/screenshots/safety-and-pv.png`
 > References: `@project-overview.md` (§5 S12, §7 `SafetyCase`/`Narrative`/`Signal`/`MedDRATerm`), `@coding-standards.md` (§A8, §A10), `@ai-interaction.md`
 
+> 🧱 **Mock phase (now):** Build the structured case panel, narrative (Narrative/Timeline/Labs), narrative queue, signal-detection card, and cumulative-safety UI against `safetyCase`, `narrativeQueue`, `safetySignal`, and `cumulativeSafety` from `@/src/lib/mock-data.ts` via a thin `src/lib/data/safety.ts` function. **Stub** narrative generation, Medical sign-off (e-sign/lock), and E2B(R3) export. The CRF→narrative generation + sign-off/audit wiring lands in later phases. The sections below describe the target state.
+
 ## Purpose
 SAE narrative workspace: generate a regulator-ready narrative from structured CRF data, track reporting clocks, surface safety signals, and export E2B(R3).
 

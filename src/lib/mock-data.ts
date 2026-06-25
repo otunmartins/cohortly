@@ -5,6 +5,7 @@ import type { Organization, User, Project } from "@/types/project";
 import type { ProtocolDocument } from "@/types/protocol";
 import type { IntelData } from "@/types/intel";
 import type { RegWritingDoc } from "@/types/writing";
+import type { SafetyCase, SafetyNarrative, QueueCase, SafetySignal, CumulativeSafety } from "@/types/safety";
 
 // Legacy aliases — kept while other pages migrate to @/types/*
 export type MockOrganization = Organization;
@@ -1321,5 +1322,220 @@ export const MOCK_REG_WRITING_DOC: RegWritingDoc = {
     { label: "SPIRIT",            value: 91, target: 85 },
     { label: "Plain-English",     value: 38, target: 35, unit: "Flesch" },
   ],
+};
+
+// ── Safety & Pharmacovigilance (S12) ─────────────────────────────────────────
+
+export const MOCK_SAFETY_CASE: SafetyCase = {
+  id: "sae_1142",
+  saeRef: "SAE-1142",
+  subjectRef: "04-218",
+  projectCode: "MAP-204",
+  siteCode: "UK-04",
+  studyDrug: "onaplazib",
+  studyDose: "60 mg",
+  expedited: true,
+  isSusar: true,
+  clock: {
+    clockType: "15-day",
+    daysRemaining: 3,
+    hoursRemaining: 4,
+    dueDate: "2026-06-28",
+    overdue: false,
+  },
+  status: "awaiting-sign-off",
+  demographics: {
+    sex: "Female",
+    age: 38,
+    ethnicity: "White",
+    bmi: 29.4,
+    nasScore: "6.1",
+    fibrosisStage: "F2",
+  },
+  event: {
+    pt: "Febrile neutropenia",
+    ptCode: "10016288",
+    soc: "Blood and lymphatic system disorders",
+    onsetDate: "Day 34",
+    severity: "severe",
+    outcome: "recovering",
+    causality: "probable",
+  },
+  concomitantMeds: [
+    { name: "Metformin", dose: "1g BD", indication: "Type 2 diabetes" },
+    { name: "Furosemide", dose: "40 mg OD", indication: "Hypertension" },
+    { name: "Atorvastatin", dose: "10 mg OD", indication: "Dyslipidaemia" },
+    { name: "Lorazepam", dose: "1 mg PRN", indication: "Anxiety" },
+    { name: "Prescribed PPI", dose: "Omeprazole 20 mg", indication: "GI protection" },
+  ],
+  relevantHistory: [
+    { condition: "Type 2 diabetes mellitus", year: 2018 },
+    { condition: "Hypertension", year: 2015 },
+    { condition: "No prior chemotherapy", year: 0 },
+  ],
+};
+
+export const MOCK_SAFETY_NARRATIVE: SafetyNarrative = {
+  id: "narr_1142",
+  caseId: "sae_1142",
+  status: "pending",
+  confidence: 0.87,
+  sourceFieldCount: 9,
+  templateVersion: "3.1",
+  modelVersion: "cohortly-v3",
+  paragraphs: [
+    {
+      id: "p1",
+      text: "Subject 04-218 is a 38-year-old White British female with a baseline diagnosis of non-alcoholic steatohepatitis (NAS 6, fibrosis stage F2) and concomitant type 2 diabetes mellitus and hypertension, randomised on 14 April 2026 to receive onaplazib 60 mg once daily.",
+      highlights: [
+        { text: "38-year-old White British female", field: "DEMOGRAPHICS" },
+        { text: "NAS 6, fibrosis stage F2", field: "NAS·FIBROSIS" },
+        { text: "onaplazib 60 mg once daily", field: "STUDY DRUG" },
+      ],
+    },
+    {
+      id: "p2",
+      text: "On Day 34 of study treatment, the subject presented to her local emergency department with a 24-hour history of fever (38.1°C), rigors, and fatigue. Laboratory evaluation revealed an absolute neutrophil count of 0.4 × 10⁹/L (baseline 3.8 × 10⁹/L) and CRP of 142 mg/L. Blood cultures were obtained and subsequently grew Escherichia coli sensitive to piperacillin–tazobactam.",
+      highlights: [
+        { text: "fever (38.1°C)", field: "TEMP" },
+        { text: "rigors", field: "SYMPTOM" },
+        { text: "fatigue", field: "SYMPTOM" },
+      ],
+    },
+    {
+      id: "p3",
+      text: "The event was assessed as Grade 3 febrile neutropenia (MedDRA PT 10016288) by the investigator and confirmed by the independent Data Safety Monitoring Board. Study drug was permanently discontinued on Day 35 per protocol M4.4 stopping rules. The subject was admitted for intravenous antibiotics and G-CSF support. By Day 41, ANC had recovered to 1.6 × 10⁹/L and the subject was discharged in stable condition.",
+      highlights: [
+        { text: "Grade 3 febrile neutropenia (MedDRA PT 10016288)", field: "MEDDRA PT" },
+      ],
+    },
+    {
+      id: "p4",
+      text: "The investigator assessed the relationship to study drug as probable, citing temporal association and the known mechanism of onaplazib's class effect on myeloid progenitors. No alternative aetiology was identified. The event is considered a Suspected Serious Adverse Reaction (SUSAR) — it is not listed in the current Investigator's Brochure (v4, §5.2.1).",
+      highlights: [
+        { text: "probable", field: "CAUSALITY" },
+      ],
+    },
+    {
+      id: "p5",
+      text: "As of the data lock point (08 May 2026), the subject is recovering with sequelae. Follow-up is scheduled at 30 and 60 days post-event.",
+      highlights: [],
+    },
+  ],
+  footerMetrics: [
+    { label: "Reporting clock", value: "12d to file" },
+    { label: "Template adherence", value: "12 of 12 sections" },
+    { label: "MedDRA accuracy", value: "100% mapped" },
+    { label: "Regulatory destinations", value: "MHRA · FDA · EMA" },
+  ],
+  timelineEntries: [
+    { date: "14 Apr 2026", event: "Randomisation", detail: "onaplazib 60 mg OD commenced" },
+    { date: "17 May 2026 (Day 34)", event: "AE onset", detail: "Fever 38.1°C, rigors, fatigue; ANC 0.4 × 10⁹/L", flagged: true },
+    { date: "18 May 2026 (Day 35)", event: "Drug discontinued", detail: "Per M4.4 stopping rules; IV antibiotics + G-CSF started" },
+    { date: "24 May 2026 (Day 41)", event: "ANC recovery", detail: "ANC 1.6 × 10⁹/L; subject discharged in stable condition" },
+    { date: "08 Jun 2026", event: "Follow-up planned", detail: "30-day and 60-day post-event checks scheduled" },
+  ],
+  labRows: [
+    { test: "ANC (× 10⁹/L)",   baseline: "3.8",  day14: "3.6",  day28: "3.1",  day41: "1.6",  unit: "× 10⁹/L", flagged: true },
+    { test: "Hb (g/dL)",        baseline: "12.8", day14: "12.4", day28: "11.9", day41: "12.1", unit: "g/dL" },
+    { test: "Platelets (× 10⁹/L)", baseline: "210", day14: "198", day28: "185", day41: "210",  unit: "× 10⁹/L" },
+    { test: "CRP (mg/L)",       baseline: "4.2",  day14: "5.1",  day28: "8.4",  day41: "142",  unit: "mg/L", flagged: true },
+    { test: "ALT (U/L)",        baseline: "28",   day14: "31",   day28: "29",   day41: "35",   unit: "U/L" },
+    { test: "eGFR (mL/min)",    baseline: "88",   day14: "85",   day28: "82",   day41: "80",   unit: "mL/min" },
+  ],
+};
+
+export const MOCK_NARRATIVE_QUEUE: QueueCase[] = [
+  {
+    id: "sae_1142",
+    saeRef: "SAE-1142",
+    subjectRef: "04-218",
+    meddraPt: "Febrile neutropenia",
+    clockType: "15-day",
+    daysRemaining: 3,
+    hoursRemaining: 4,
+    overdue: false,
+    confidence: 0.87,
+    status: "awaiting-sign-off",
+  },
+  {
+    id: "sae_0362",
+    saeRef: "SAE-0362",
+    subjectRef: "02-091",
+    meddraPt: "ALT increased",
+    clockType: "15-day",
+    daysRemaining: 8,
+    hoursRemaining: 2,
+    overdue: false,
+    confidence: 0.91,
+    status: "open",
+  },
+  {
+    id: "sae_0448",
+    saeRef: "SAE-0448",
+    subjectRef: "07-312",
+    meddraPt: "Atrial fibrillation",
+    clockType: "7-day",
+    daysRemaining: 0,
+    hoursRemaining: 0,
+    overdue: true,
+    confidence: 0.74,
+    status: "overdue",
+  },
+  {
+    id: "sae_0519",
+    saeRef: "SAE-0519",
+    subjectRef: "03-147",
+    meddraPt: "Pneumonia",
+    clockType: "15-day",
+    daysRemaining: 12,
+    hoursRemaining: 6,
+    overdue: false,
+    confidence: 0.83,
+    status: "open",
+  },
+  {
+    id: "sae_0611",
+    saeRef: "SAE-0611",
+    subjectRef: "05-229",
+    meddraPt: "Neutropenia",
+    clockType: "15-day",
+    daysRemaining: 14,
+    hoursRemaining: 0,
+    overdue: false,
+    confidence: 0.79,
+    status: "open",
+  },
+];
+
+export const MOCK_SAFETY_SIGNALS: SafetySignal[] = [
+  {
+    id: "sig_001",
+    term: "Neutropenia",
+    assessment: "possible",
+    observed: 4,
+    expected: 1,
+    prr: 4.2,
+    chiSquared: 8.9,
+    detail: "Febrile neutropenia n=4 vs IB expected n≤1",
+  },
+  {
+    id: "sig_002",
+    term: "Hepatotoxicity",
+    assessment: "possible",
+    observed: 2,
+    expected: 1,
+    prr: 2.1,
+    chiSquared: 3.4,
+    detail: "ALT ≥3× ULN: n=2; monitoring ongoing per DILI protocol",
+  },
+];
+
+export const MOCK_CUMULATIVE_SAFETY: CumulativeSafety = {
+  projectCode: "MAP-204",
+  totalSaes: 5,
+  totalSusars: 2,
+  dsurDue: "15 Aug",
+  dsmbNext: "11 Jun",
 };
 

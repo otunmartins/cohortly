@@ -1,12 +1,31 @@
-# Current Feature
+# Current Feature: Safety & Pharmacovigilance (S12)
 
 ## Status
 
-Not Started
+In Progress
 
 ## Goals
 
+- Narrative queue page (`/safety`) listing SAE cases with due-window badges and confidence scores
+- SAE detail page (`/safety/[saeId]`) with 3-pane layout: structured case panel (left), narrative tabs (center), queue + signals + cumulative rail (right)
+- `CaseDataPanel` — demographics, MedDRA event, concomitant meds, relevant history; expedited badge + reporting clock
+- `NarrativeEditor` — AI-drafted narrative via `<AIDraftBlock/>` with highlighted CRF fields; Narrative / Timeline / Labs tabs; footer metrics (clock, template adherence, MedDRA accuracy, regulatory destinations)
+- `NarrativeQueue` — other SAEs with due-window countdown and confidence indicators
+- `SignalDetectionCard` — possible signal (neutropenia n=4, PRR=4.2, χ²=8.9) with Open assessment CTA
+- `CumulativeSafety` — SAE/SUSAR totals, DSUR due date, DSMB next date for MAP-204
+- TopBar: breadcrumb "Safety & PV · SAE-1142 · Subject 04-218", **Due in 3d 4h** countdown, E2B(R3) export button, Medical sign-off button
+- Mock data in `src/lib/data/safety.ts` backed by types in `src/types/safety.ts`
+- Stub server actions: `generateNarrative`, `acceptNarrativeSuggestion`, `rejectNarrativeSuggestion`, `medicalSignOff`, `exportE2b`
+- Tenant-scoped; no PHI in logs; loading/empty/error states; keyboard accessible
+
 ## Notes
+
+- Route: `app/(app)/safety/page.tsx` (queue) + `app/(app)/safety/[saeId]/page.tsx`
+- Mock phase: all data from `src/lib/data/safety.ts`; no live AI or E2B XML generation
+- Reuse `<Confidence/>` and `<AIDraftBlock/>` shared components (already built)
+- Reporting clocks are regulatory deadlines — display prominently with colour-coded urgency
+- Medical sign-off stubs the e-sign + audit lock flow (same pattern as `signOffDocument` in writing)
+- Screenshot reference: `context/screenshots/safety-and-pv.png`
 
 ## History
 
