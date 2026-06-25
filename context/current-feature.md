@@ -1,32 +1,12 @@
-# Current Feature: Ethics & IRAS Assistant (S11)
+# Current Feature
 
 ## Status
 
-In Progress
+Not Started
 
 ## Goals
 
-- Section A–H progress nav with per-section completion counts and status dots, plus a completion % bar in the left rail
-- Required documents checklist (Protocol, IB, PIS·adult, ICF·adult, GP letter, DPIA, Sponsor insurance) with status icons
-- Center section editor showing per-question answer cards (D1–D4 pattern) with Auto/Edited badge, source citation + confidence %
-- PIS readability card with Plain English, reading age, Flesch score + Preview
-- HRA compliance rail (UK Policy Framework, Equality Act, Inclusion & Diversity, DPA 2018, Mental Capacity Act — pass/warn/n-a) + gap callout with Generate from protocol CTA
-- REC review timeline (Submission → Validation → REC meeting → Opinion → HRA approval)
-- NIHR portfolio eligibility card with Adopt to portfolio action
-- TopBar: breadcrumb "Ethics & IRAS · MAP-204 · IRAS application", Submission pack, Submit to HRA
-- All data from mock layer (`src/lib/data/ethics.ts`) against `src/lib/mock-data.ts`; stub server actions (`autoPopulateSection`, `editAnswer`, `generateDocument`, `submitToHra`, `downloadSubmissionPack`)
-
 ## Notes
-
-- Route: `app/(app)/ethics/[id]/page.tsx` — this is screen S11
-- Mock phase only: answers shown as if already generated (from mock data). RAG wiring is AI phase — stub "Auto-populate" and "Generate from protocol" calls.
-- New types: `src/types/ethics.ts` (`EthicsApplication`, `FormSection`, `IrasAnswer`, `RequiredDoc`, `HraCheck`, `RecMilestone`, `NihrPortfolio`)
-- New data layer: `src/lib/data/ethics.ts` wrapping mock data
-- New actions: `src/actions/ethics.ts` (stub, with audit scaffolding)
-- New components: `IrasSectionNav`, `RequiredDocsChecklist`, `HraComplianceRail`, `RecTimeline`, `NihrPortfolioCard`, `EthicsClient`
-- Reuse: `<Confidence/>`, `<Citation/>`, `<AIDraftBlock/>` (for any answer with low confidence flagged)
-- Compliance: auto-populated answers carry source + confidence; edits flip badge to Edited and are audited; tenant-scoped; UK data residency
-- shadcn components: `Accordion`, `Progress`, `Badge`, `Card`, `Button`
 
 ## History
 
@@ -42,3 +22,4 @@ In Progress
 - **2026-06-25** — Competitive Intelligence (S13) built: KPI strip (active trials Δ, new approvals, patient pool overlap %, site collisions, reg milestones), competing trials table (All/Phase III/Phase II/UK overlap tabs, threat badges, enrolled progress bars), label decisions rail (FDA/EMA/MHRA), patent & exclusivity cliff watch, site-overlap heatmap (your sites × competitor trials, at-risk count). `IntelKpiHeader`, `CompetingTrialsTable`, `LabelDecisionsRail`, `CliffWatch`, `SiteOverlapHeatmap`, `IntelClient` components. Stub server actions (`configureAlerts`, `exportLandscapeReport`). New `src/types/intel.ts`, `src/lib/data/intel.ts`, `src/actions/intel.ts`. TopBar updated with Competitive Intel breadcrumb + Configure alerts + Export landscape report. Merged to main.
 - **2026-06-25** — Regulatory Writing (S10) built: 3-pane eCTD module authoring for IND-019 Onaplazib §2.7.4 Summary of Clinical Safety. Left rail: eCTD module tree (Modules 1–5, recursive children, status icons) + Consistency Check panel (error/warning/ok with expandable details). Center: TipTap editor with CitationNode inline chips + reviewer flag annotation + `<AIDraftBlock/>` (renal safety draft, confidence 81%, gated on human accept/reject). Right rail: Comments/Sources/History tabs (human + AI comments with confidence, 7 cited sources, 5-entry audit trail) + Document Health meters (Source-traceable 88%, Terminology 74%, SPIRIT 91%, Flesch 38) + provenance block (21 CFR 11, content hash). `EctdModuleTree`, `ConsistencyCheck`, `DocHealthRail`, `CommentThread`, `RegWritingClient` components. Stub server actions (`saveWritingSection`, `acceptWritingSuggestion`, `rejectWritingSuggestion`, `addWritingComment`, `exportEctd`, `signOffDocument`). New `src/types/writing.ts`, `src/lib/data/writing.ts`, `src/actions/writing.ts`. TopBar updated with writing breadcrumb + Export eCTD + Sign-off. Merged to main.
 - **2026-06-25** — Safety & PV (S12) built: /safety queue page grouped by overdue/urgent/upcoming with cumulative KPI strip (SAE/SUSAR totals, DSUR due, DSMB next). /safety/[saeId] 3-pane layout: `CaseDataPanel` (expedited/SUSAR badges, colour-coded reporting clock, demographics, MedDRA event, concomitant meds, relevant history), `NarrativeEditor` (Narrative/Timeline/Labs tabs, amber-highlighted CRF fields, `<AIDraftBlock/>`, footer metrics), right rail with `NarrativeQueue` + `SignalDetectionCard` (neutropenia PRR=4.2, χ²=8.9) + `CumulativeSafetyCard`. TopBar: Safety & PV breadcrumb + Due in 3d 4h countdown + E2B(R3) + Medical sign-off. Stub server actions (`generateNarrative`, `acceptNarrativeSuggestion`, `rejectNarrativeSuggestion`, `medicalSignOff`, `exportE2b`). New `src/types/safety.ts`, `src/lib/data/safety.ts`, `src/actions/safety.ts`. Merged to main.
+- **2026-06-25** — Ethics & IRAS (S11) built: 3-pane UK HRA/IRAS application builder for MAP-204. Left rail: section A–H nav (progress counts + status icons), completion % bar, required documents checklist (Protocol, IB, PIS·adult, ICF·adult, GP letter, DPIA, Sponsor insurance) with status badges. Center: per-question answer cards (Auto/Edited badges, source ref + confidence %), PIS readability card (reading age 11.4, Flesch 58.2, word count, HRA template version) with Preview toggle, empty-state with Auto-populate CTA. Right rail: HRA compliance check (UK Policy Framework, Equality Act, Inclusion & Diversity, DPA 2018, Mental Capacity Act — pass/warn/n-a), amber gap callout (DPIA missing in F12 with Generate from protocol CTA), REC review timeline (5 milestones: Submission→HRA approval), NIHR portfolio eligibility card with Adopt to portfolio. TopBar: Ethics & IRAS breadcrumb + Submission pack + Submit to HRA. Stub server actions (`autoPopulateSection`, `editAnswer`, `generateDocument`, `downloadSubmissionPack`, `submitToHra`) with audit scaffolding. New `src/types/ethics.ts`, `src/lib/data/ethics.ts`, `src/actions/ethics.ts`, `src/components/ethics/` (6 components: `IrasSectionNav`, `RequiredDocsChecklist`, `HraComplianceRail`, `RecTimeline`, `NihrPortfolioCard`, `EthicsClient`). Verified in browser. Merged to main.
